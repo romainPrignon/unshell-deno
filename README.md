@@ -12,3 +12,5 @@ Uncaught Other: Is a directory (os error 21)
     at compilerHost.resolveModuleNames (third_party/node_modules/typescript/lib/typescript.js:121106:138)
     at resolveModuleNamesWorker (third_party/node_modules/typescript/lib/typescript.js:88311:127)
     at resolveModuleNamesReusingOldState (third_party/node_modules/typescript/lib/typescript.js:88553:24)
+
+import/export de testing pas clair

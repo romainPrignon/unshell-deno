@@ -1,14 +1,14 @@
 // type
 import { Options, Command } from '../type/index.d.ts'
 
-import {asserts, mod} from '../deps.ts'
-
+import deps from '../deps.ts'
+const {testing} = deps
 
 // test
 import { unshell } from './unshell.ts'
 
 
-mod.test(function it_should_be_a_function() {
+testing.test(function it_should_be_a_function_if_called_with_options() {
   // Arrange
   const opt: Options = {
     env: {}
@@ -18,10 +18,31 @@ mod.test(function it_should_be_a_function() {
   const output = unshell(opt)
 
   // Assert
-  asserts.assertEquals(typeof output, 'function')
+  testing.assertEquals(typeof output, 'function')
 })
 
-mod.runIfMain(import.meta);
+testing.test(function it_should_be_a_function_if_called_with_default_options() {
+  // Act
+  const output = unshell()
+
+  // Assert
+  testing.assertEquals(typeof output, 'function')
+})
+
+testing.test(async function it_should_throw_if_script_is_not_a_generator() {
+  // Arrange
+  const cmd = `echo OK`
+
+  const script: any = function () {
+    return cmd
+  }
+
+  // ?? asser to throw
+  await unshell()(script)
+  // expect(err.message).toEqual('unshell: Invalid SCRIPT')
+})
+
+testing.runIfMain(import.meta);
 
 // // mock
 // jest.mock('util')
