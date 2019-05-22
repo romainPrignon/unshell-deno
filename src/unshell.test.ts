@@ -1,14 +1,14 @@
 // type
 import { Options, Command } from '../type/index.d.ts'
 
-import {test, runIfMain, assertEquals} from '../deps.ts'
+import {asserts, mod} from '../deps.ts'
 
 
 // test
 import { unshell } from './unshell.ts'
 
 
-test(function itMustBeAFunction() {
+mod.test(function it_should_be_a_function() {
   // Arrange
   const opt: Options = {
     env: {}
@@ -18,10 +18,10 @@ test(function itMustBeAFunction() {
   const output = unshell(opt)
 
   // Assert
-  assertEquals(typeof output, 'function')
+  asserts.assertEquals(typeof output, 'function')
 })
 
-runIfMain(import.meta);
+mod.runIfMain(import.meta);
 
 // // mock
 // jest.mock('util')

@@ -1,5 +1,5 @@
 start:
-	deno --allow-run src/unshell.ts
+	deno run --allow-run src/unshell.ts
 
 test:
-	deno src/unshell.test.ts
+	deno run src/unshell.test.ts

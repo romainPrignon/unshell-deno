@@ -1,2 +1,7 @@
-export { test, runIfMain } from "https://deno.land/std/testing/mod.ts";
-export { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import * as mod from "https://deno.land/std/testing/mod.ts";
+import * as asserts from "https://deno.land/std/testing/asserts.ts";
+
+export {
+    mod,
+    asserts
+}
