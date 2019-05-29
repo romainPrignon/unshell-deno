@@ -1,7 +1,9 @@
-Deno.env type
-
-import dir => erreur incomprhensible
-Uncaught Other: Is a directory (os error 21)
+TODO
+====
+- Deno.env type
+- Deno.Process.status => harden type (signal for example)
+- import dir => not understandable
+- Uncaught Other: Is a directory (os error 21)
     at DenoError (js/errors.ts:22:5)
     at maybeError (js/errors.ts:33:12)
     at maybeThrowError (js/errors.ts:39:15)
@@ -12,5 +14,6 @@ Uncaught Other: Is a directory (os error 21)
     at compilerHost.resolveModuleNames (third_party/node_modules/typescript/lib/typescript.js:121106:138)
     at resolveModuleNamesWorker (third_party/node_modules/typescript/lib/typescript.js:88311:127)
     at resolveModuleNamesReusingOldState (third_party/node_modules/typescript/lib/typescript.js:88553:24)
-
-import/export de testing pas clair
+- import/export from testing unclear
+- coverage
+- eslint/tslint

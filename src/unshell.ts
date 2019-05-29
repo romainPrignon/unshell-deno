@@ -4,6 +4,7 @@ import { Options, Script, Args, Engine } from '../type/index.d.ts'
 const defaultOptions = {
     env: {}
 }
+const decoder = new TextDecoder('utf-8');
 
 export const unshell = (opt: Options = defaultOptions): Engine => {
     return async (script: Script, ...args: Args): Promise<void> => {
@@ -22,14 +23,14 @@ export const unshell = (opt: Options = defaultOptions): Engine => {
 
             try {
                 const commands = cmd.value.split(' ')
-                
+
                 const process = Deno.run({
                     args: commands,
                     env: opt.env,
                     stdout: "piped"
                 })
                 const stdout = new Deno.Buffer(await process.output()).toString()
-                
+
                 if (stdout) {
                     console.log(`➜ ${stdout}`)
                 }
@@ -48,7 +49,7 @@ export const unshell = (opt: Options = defaultOptions): Engine => {
         // last iteration
         if (cmd.done === true && cmd.value) {
             console.log(`• ${cmd.value}`)
-            
+
             const commands = cmd.value.split(' ')
 
             const process = Deno.run({

@@ -1,14 +1,13 @@
 // type
 import { Options, Command } from '../type/index.d.ts'
 
-import deps from '../deps.ts'
-const {testing} = deps
+import { runTests, test, assert, assertThrowsAsync, assertEquals} from '../deps.ts'
 
 // test
 import { unshell } from './unshell.ts'
 
 
-testing.test(function it_should_be_a_function_if_called_with_options() {
+test(function it_should_return_an_async_function_if_called_with_options() {
   // Arrange
   const opt: Options = {
     env: {}
@@ -18,31 +17,44 @@ testing.test(function it_should_be_a_function_if_called_with_options() {
   const output = unshell(opt)
 
   // Assert
-  testing.assertEquals(typeof output, 'function')
+  assert(output instanceof Function)
 })
 
-testing.test(function it_should_be_a_function_if_called_with_default_options() {
+test(function it_should_return_an_async_function_if_called_with_default_options() {
   // Act
   const output = unshell()
 
   // Assert
-  testing.assertEquals(typeof output, 'function')
+  assert(output instanceof Function)
 })
 
-testing.test(async function it_should_throw_if_script_is_not_a_generator() {
+test(async function it_should_throw_if_script_is_not_a_generator() {
   // Arrange
   const cmd = `echo OK`
-
   const script: any = function () {
     return cmd
   }
 
-  // ?? asser to throw
-  await unshell()(script)
-  // expect(err.message).toEqual('unshell: Invalid SCRIPT')
+  assertThrowsAsync(() => unshell()(script), Error, 'unshell: Invalid SCRIPT')
 })
 
-testing.runIfMain(import.meta);
+// test(async function it_should_process_command() {
+//   // Arrange
+//   const cmd = `echo OK`
+//   const script = function * (): IterableIterator<string> {
+//     yield cmd
+//   }
+
+//   // Mock
+//   // console.log = (string) => {
+//     // assertEquals(string, 'expected')
+//   // }
+
+//   // Act
+//   const res = await unshell()(script)
+
+//   //assert(typeof res === 'void')
+// })
 
 // // mock
 // jest.mock('util')
@@ -69,39 +81,6 @@ testing.runIfMain(import.meta);
 //     env: {}
 //   }
 
-//   it('should return async function when called with options', async () => {
-//     // Act
-//     const output = unshell(opt)
-
-//     // Assert
-//     expect(output).toBeInstanceOf(Function)
-//   })
-
-//   it('should return async function when called with default options', async () => {
-//     // Act
-//     const output = unshell()
-
-//     // Assert
-//     expect(output).toBeInstanceOf(Function)
-//   })
-
-//   it('should throw if script is not a generator', async (done) => {
-//     // Arrange
-//     const script: any = function () {
-//       return cmd
-//     }
-
-//     try {
-//       await unshell(opt)(script)
-
-//       done(`Script is not a generator`)
-//     } catch (err) {
-//       expect(err.message).toEqual('unshell: Invalid SCRIPT')
-
-//       done()
-//     }
-
-//   })
 
 //   it('should log command', async () => {
 //     // Arrange

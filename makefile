@@ -1,5 +1,8 @@
-start:
-	deno run --allow-run src/unshell.ts
+help:
+	deno run --allow-run src/cli.ts help
+
+run:
+	deno run --allow-run src/cli.ts run ${script}
 
 test:
-	deno run src/unshell.test.ts
+	deno run src/mod.test.ts
