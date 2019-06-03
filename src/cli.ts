@@ -39,7 +39,7 @@ const resolveScript = async (scriptPath: string): Promise<Script> => {
   let script
   try {
     // script = await import(resolve(scriptPath)) // Not Supported
-    script = function * () {
+    script = function* () {
       yield `echo hello`
       return `echo world`
     }
