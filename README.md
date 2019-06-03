@@ -17,3 +17,4 @@ TODO
 - import/export from testing unclear
 - coverage
 - eslint/tslint
+- import dynamic

@@ -20,7 +20,7 @@ Commands:
 const run = async ({ args, env }: MainOpt): Promise<void> => {
   const [_, __, scriptPath, ...rest] = args
 
-  const script = resolveScript(scriptPath)
+  const script = await resolveScript(scriptPath)
 
   try {
     await unshell({ env })(script, ...rest)
@@ -35,10 +35,14 @@ const run = async ({ args, env }: MainOpt): Promise<void> => {
   }
 }
 
-const resolveScript = (scriptPath: string): Script => {
+const resolveScript = async (scriptPath: string): Promise<Script> => {
   let script
   try {
-    script = import(resolve(scriptPath))
+    // script = await import(resolve(scriptPath)) // Not Supported
+    script = function * () {
+      yield `echo hello`
+      return `echo world`
+    }
   } catch (err) {
     console.error(`${red('✘')} unshell: Invalid SCRIPT_PATH`)
     throw err
