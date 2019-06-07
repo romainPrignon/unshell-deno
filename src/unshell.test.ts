@@ -1,7 +1,7 @@
 // type
 import { Options, Command } from '../type/index.d.ts'
 
-import { runTests, test, assert, assertThrowsAsync, assertEquals} from '../deps.ts'
+import {test, assert, assertThrowsAsync} from '../deps.ts'
 
 // test
 import { unshell } from './unshell.ts'
