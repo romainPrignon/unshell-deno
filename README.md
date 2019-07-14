@@ -1,9 +1,10 @@
 TODO
 ====
 - Deno.env type
-- Deno.Process.status => harden type (signal for example)
+- Deno.ExitCode
+- coverage
 - import dir => not understandable
-- Uncaught Other: Is a directory (os error 21)
+Uncaught Other: Is a directory (os error 21)
     at DenoError (js/errors.ts:22:5)
     at maybeError (js/errors.ts:33:12)
     at maybeThrowError (js/errors.ts:39:15)
@@ -14,7 +15,6 @@ TODO
     at compilerHost.resolveModuleNames (third_party/node_modules/typescript/lib/typescript.js:121106:138)
     at resolveModuleNamesWorker (third_party/node_modules/typescript/lib/typescript.js:88311:127)
     at resolveModuleNamesReusingOldState (third_party/node_modules/typescript/lib/typescript.js:88553:24)
-- import/export from testing unclear
-- coverage
 - eslint/tslint
 - import dynamic
+- test bundle

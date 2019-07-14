@@ -9,3 +9,6 @@ run:
 
 test:
 	deno run --allow-run src/mod.test.ts
+
+debug:
+	/home/romainprignon/workspace/open/deno/target/release/deno run --allow-run --allow-env src/cli.ts run ${script}
