@@ -36,17 +36,15 @@ const run = async ({ args, env }: MainOpt): Promise<void> => {
 }
 
 const resolveScript = async (scriptPath: string): Promise<Script> => {
-  let script
+  let module
   try {
-    // script = await import(resolve(scriptPath)) // Not Supported
-    script = function* () {
-      yield `echo hello`
-      return `echo world`
-    }
+    module = await import(resolve(scriptPath))
   } catch (err) {
     console.error(`${red('✘')} unshell: Invalid SCRIPT_PATH`)
     throw err
   }
+
+  const script = module.default
 
   try {
     assertUnshellScript(script)
@@ -69,11 +67,12 @@ export const cli = async ({ args, env }: MainOpt): Promise<void> => {
   }
 }
 
-if (import.meta.main) {
+// TODO: uncomment when deno bundle works with import.meta.main
+// if (import.meta.main) {
   const args = Deno.args
   const env = Deno.env()
 
   cli({ args, env })
     .then(() => Deno.exit(0))
     .catch(() => Deno.exit(1))
-}
+// }

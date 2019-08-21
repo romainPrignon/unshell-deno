@@ -1,4 +1,4 @@
-module.exports = function* () {
+export default function* () {
   yield `echo hello`
   yield `echo world`
 }
