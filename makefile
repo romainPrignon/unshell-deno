@@ -1,5 +1,5 @@
-.SILENT: install update fmt lint run test coverage bin debug-src debug-test
-.PHONY: install update fmt lint run test coverage bin debug-src debug-test
+.SILENT: install update fmt lint run test spec coverage bin debug-src debug-test
+.PHONY: install update fmt lint run test spec coverage bin debug-src debug-test
 
 install:
 	deno cache --reload --lock=lock.json deps.ts
@@ -18,7 +18,10 @@ run: ## make run cmd=help			make run cmd=run ./script.js
 	deno run -c tsconfig.json --lock=lock.json --cached-only --allow-run --allow-env --allow-read src/cli.ts ${cmd}
 
 test:
-	deno test -c tsconfig.json --allow-run --allow-read --failfast src/*.test.ts
+	deno test -c tsconfig.json --allow-run --allow-read --failfast src/
+
+spec:
+	deno test -c tsconfig.json --allow-run --allow-read --failfast spec/
 
 coverage:
 	echo TODO
