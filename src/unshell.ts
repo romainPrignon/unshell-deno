@@ -1,4 +1,4 @@
-import { Options, Script, Args, Engine } from '../type/index.d.ts'
+import { Options, Script, Args, Engine } from "../type/index.d.ts"
 
 
 const defaultOptions = {
@@ -24,7 +24,7 @@ export const unshell = (opt: Options = defaultOptions): Engine => {
         const commands = cmd.value.split(' ')
 
         const process = Deno.run({
-          args: commands,
+          cmd: commands,
           env: opt.env,
           stdout: "piped"
         })
@@ -52,7 +52,7 @@ export const unshell = (opt: Options = defaultOptions): Engine => {
       const commands = cmd.value.split(' ')
 
       const process = Deno.run({
-        args: commands,
+        cmd: commands,
         env: opt.env,
         stdout: "piped"
       })

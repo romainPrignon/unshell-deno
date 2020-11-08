@@ -1,13 +1,13 @@
 // type
-import { Options, Command } from '../type/index.d.ts'
+import { Options } from "../type/index.d.ts"
 
-import {test, assert, assertThrowsAsync} from '../deps.ts'
+import { assert, assertThrowsAsync } from "../deps.ts"
 
 // test
-import { unshell } from './unshell.ts'
+import { unshell } from "./unshell.ts"
 
 
-test(function it_should_return_an_async_function_if_called_with_options() {
+Deno.test("it_should_return_an_async_function_if_called_with_options", () => {
   // Arrange
   const opt: Options = {
     env: {}
@@ -20,7 +20,7 @@ test(function it_should_return_an_async_function_if_called_with_options() {
   assert(output instanceof Function)
 })
 
-test(function it_should_return_an_async_function_if_called_with_default_options() {
+Deno.test("it_should_return_an_async_function_if_called_with_default_options", () => {
   // Act
   const output = unshell()
 
@@ -28,7 +28,7 @@ test(function it_should_return_an_async_function_if_called_with_default_options(
   assert(output instanceof Function)
 })
 
-test(async function it_should_throw_if_script_is_not_a_generator() {
+Deno.test("it_should_throw_if_script_is_not_a_generator", async () => {
   // Arrange
   const cmd = `echo OK`
   const script: any = function () {
@@ -38,7 +38,7 @@ test(async function it_should_throw_if_script_is_not_a_generator() {
   assertThrowsAsync(() => unshell()(script), Error, 'unshell: Invalid SCRIPT')
 })
 
-// test(async function it_should_process_command() {
+// Deno.test(async function it_should_process_command() {
 //   // Arrange
 //   const cmd = `echo OK`
 //   const script = function * (): IterableIterator<string> {

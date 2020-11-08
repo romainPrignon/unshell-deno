@@ -18,7 +18,7 @@ Commands:
 }
 
 const run = async ({ args, env }: MainOpt): Promise<void> => {
-  const [_, __, scriptPath, ...rest] = args
+  const [_, scriptPath, ...rest] = args
 
   const script = await resolveScript(scriptPath)
 
@@ -58,7 +58,7 @@ const resolveScript = async (scriptPath: string): Promise<Script> => {
 }
 
 export const cli = async ({ args, env }: MainOpt): Promise<void> => {
-  const [_, unshellCommand, ...rest] = args
+  const [unshellCommand, ...rest] = args
 
   switch (unshellCommand) {
     case 'help': return help()
@@ -70,7 +70,7 @@ export const cli = async ({ args, env }: MainOpt): Promise<void> => {
 // TODO: uncomment when deno bundle works with import.meta.main
 // if (import.meta.main) {
   const args = Deno.args
-  const env = Deno.env()
+const env = Deno.env.toObject()
 
   cli({ args, env })
     .then(() => Deno.exit(0))
