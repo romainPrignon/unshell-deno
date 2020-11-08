@@ -12,7 +12,7 @@ fmt:
 	deno fmt src/
 
 lint:
-	echo TODO
+	deno lint --unstable src/
 
 run: ## make run cmd=help			make run cmd=run ./script.js
 	deno run -c tsconfig.json --lock=lock.json --cached-only --allow-run --allow-env --allow-read src/cli.ts ${cmd}

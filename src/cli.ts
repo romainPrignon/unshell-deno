@@ -3,7 +3,7 @@ import { Script } from "../type/index.d.ts";
 import { red, resolve } from "../deps.ts";
 import { assertUnshellScript, unshell } from "./unshell.ts";
 
-type MainOpt = { args: Array<string>; env: {} }; //NodeJS.ProcessEnv
+type MainOpt = { args: Array<string>; env: Record<string, string> }; //NodeJS.ProcessEnv
 
 const help = async (): Promise<void> => {
   console.log(`Execute script through unshell runtime

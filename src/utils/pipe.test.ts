@@ -20,7 +20,7 @@ Deno.test("it_should_return_empty_string_on_call_with_no_args", () => {
 });
 
 Deno.test("it_should_return_echo_hello_world_string_on_call_with_one_arg", () => {
-  const f1 = (param: any) => `echo ${param}`;
+  const f1 = (param: unknown) => `echo ${param}`;
 
   const output = pipe(f1)(`hello world`);
 
@@ -28,7 +28,7 @@ Deno.test("it_should_return_echo_hello_world_string_on_call_with_one_arg", () =>
 });
 
 Deno.test("it_should_return_echo_hello_world_pipe_grep_world_string_on_call_with_two_fn", () => {
-  const f1 = (param: any) => `echo ${param}`;
+  const f1 = (param: unknown) => `echo ${param}`;
   const f2 = () => `grep world`;
 
   const output = pipe(f1, f2)(`hello world`);

@@ -4,7 +4,7 @@ TODO
 ✔ make bin
   - dans la ci avec le chemin vers http
 ✔ make fmt
-- make lint
+✔ make lint
 - make coverage
 - git hooks
 ✔ use as bin
@@ -18,3 +18,5 @@ conclusion
 - error with iterable typing
 - fmt not configurable => https://dprint.dev/cli/
 - can't filter spec test
+- small config params for eslint and not configurable
+-

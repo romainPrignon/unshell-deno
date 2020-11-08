@@ -9,12 +9,12 @@ interface MyAsyncIterableIterator<T, TReturn = any, TNext = undefined> extends A
 // ----
 
 export type Options = {
-  env: {}
+  env: Record<string, string>
 }
 
 export type Command = string
 
-export type Args = Array<any>
+export type Args = Array<unknown>
 
 export type Script = (...args: Args) => MyIterableIterator<Command, Command, Command> | MyAsyncIterableIterator<Command, Command, Command>
 

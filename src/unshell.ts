@@ -64,18 +64,23 @@ export const unshell = (opt: Options = defaultOptions): Engine => {
   };
 };
 
-export const assertUnshellScript = (fn: Function): fn is Script => {
-  if (isGenerator(fn)) return true;
-  if (isAsyncGenerator(fn)) return true;
+export function assertUnshellScript(fn: unknown): asserts fn is Script {
+  if (!isFunction(fn)) {
+    throw new Error("unshell: Invalid SCRIPT");
+  }
+  if (!(isGenerator(fn) || isAsyncGenerator(fn))) {
+    throw new Error("unshell: Invalid SCRIPT");
+  }
+}
 
-  throw new Error("unshell: Invalid SCRIPT");
-};
+const isFunction = (fn: unknown): fn is () => unknown =>
+  typeof fn === "function"
 
-const isGenerator = (fn: Function): fn is () => IterableIterator<string> =>
+const isGenerator = (fn: () => unknown): fn is () => IterableIterator<string> =>
   fn.constructor.name === "GeneratorFunction";
 
 const isAsyncGenerator = (
-  fn: Function,
+  fn: () => unknown,
 ): fn is () => AsyncIterableIterator<string> =>
   fn.constructor.name === "AsyncGeneratorFunction";
 
