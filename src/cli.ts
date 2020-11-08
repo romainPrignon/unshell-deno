@@ -70,11 +70,11 @@ export const cli = async ({ args, env }: MainOpt): Promise<void> => {
 };
 
 // TODO: uncomment when deno bundle works with import.meta.main
-// if (import.meta.main) {
-const args = Deno.args;
-const env = Deno.env.toObject();
+if (import.meta.main) {
+  const args = Deno.args;
+  const env = Deno.env.toObject();
 
-cli({ args, env })
-  .then(() => Deno.exit(0))
-  .catch(() => Deno.exit(1));
-// }
+  cli({ args, env })
+    .then(() => Deno.exit(0))
+    .catch(() => Deno.exit(1));
+}
