@@ -1,42 +1,41 @@
 // type
-import { Options } from "../type/index.d.ts"
+import { Options } from "../type/index.d.ts";
 
-import { assert, assertThrowsAsync } from "../deps.ts"
+import { assert, assertThrowsAsync } from "../deps.ts";
 
 // test
-import { unshell } from "./unshell.ts"
-
+import { unshell } from "./unshell.ts";
 
 Deno.test("it_should_return_an_async_function_if_called_with_options", () => {
   // Arrange
   const opt: Options = {
-    env: {}
-  }
+    env: {},
+  };
 
   // Act
-  const output = unshell(opt)
+  const output = unshell(opt);
 
   // Assert
-  assert(output instanceof Function)
-})
+  assert(output instanceof Function);
+});
 
 Deno.test("it_should_return_an_async_function_if_called_with_default_options", () => {
   // Act
-  const output = unshell()
+  const output = unshell();
 
   // Assert
-  assert(output instanceof Function)
-})
+  assert(output instanceof Function);
+});
 
 Deno.test("it_should_throw_if_script_is_not_a_generator", async () => {
   // Arrange
-  const cmd = `echo OK`
+  const cmd = `echo OK`;
   const script: any = function () {
-    return cmd
-  }
+    return cmd;
+  };
 
-  assertThrowsAsync(() => unshell()(script), Error, 'unshell: Invalid SCRIPT')
-})
+  assertThrowsAsync(() => unshell()(script), Error, "unshell: Invalid SCRIPT");
+});
 
 // Deno.test(async function it_should_process_command() {
 //   // Arrange
@@ -60,7 +59,6 @@ Deno.test("it_should_throw_if_script_is_not_a_generator", async () => {
 // jest.mock('util')
 // import util from 'util'
 
-
 // beforeEach(() => {
 //   console.log = jest.fn()
 //   console.error = jest.fn()
@@ -80,7 +78,6 @@ Deno.test("it_should_throw_if_script_is_not_a_generator", async () => {
 //   const opt: Options = {
 //     env: {}
 //   }
-
 
 //   it('should log command', async () => {
 //     // Arrange

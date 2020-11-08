@@ -1,10 +1,9 @@
-import { Script } from '../type/index.d.ts'
+import { Script } from "../type/index.d.ts";
 
-import { red, resolve } from '../deps.ts'
-import { unshell, assertUnshellScript } from './unshell.ts'
+import { red, resolve } from "../deps.ts";
+import { assertUnshellScript, unshell } from "./unshell.ts";
 
-
-type MainOpt = { args: Array<string>, env: {} } //NodeJS.ProcessEnv
+type MainOpt = { args: Array<string>; env: {} }; //NodeJS.ProcessEnv
 
 const help = async (): Promise<void> => {
   console.log(`Execute script through unshell runtime
@@ -14,65 +13,68 @@ Usage:
 
 Commands:
   help      Print this help message
-  run       run a script through unshell runtime`)
-}
+  run       run a script through unshell runtime`);
+};
 
 const run = async ({ args, env }: MainOpt): Promise<void> => {
-  const [_, scriptPath, ...rest] = args
+  const [_, scriptPath, ...rest] = args;
 
-  const script = await resolveScript(scriptPath)
+  const script = await resolveScript(scriptPath);
 
   try {
-    await unshell({ env })(script, ...rest)
+    await unshell({ env })(script, ...rest);
   } catch (err) {
     // TODO: if code unshell
     const msg = `
-      ${red('✘')} unshell: something went wrong
-    `
-    console.error(msg)
+      ${red("✘")} unshell: something went wrong
+    `;
+    console.error(msg);
 
-    throw err // or better depending on debug
+    throw err; // or better depending on debug
   }
-}
+};
 
 const resolveScript = async (scriptPath: string): Promise<Script> => {
-  let module
+  let module;
   try {
-    module = await import(resolve(scriptPath))
+    module = await import(resolve(scriptPath));
   } catch (err) {
-    console.error(`${red('✘')} unshell: Invalid SCRIPT_PATH`)
-    throw err
+    console.error(`${red("✘")} unshell: Invalid SCRIPT_PATH`);
+    throw err;
   }
 
-  const script = module.default
+  const script = module.default;
 
   try {
-    assertUnshellScript(script)
+    assertUnshellScript(script);
   } catch (err) {
-    console.error(`${red('✘')} ${err.message}`)
+    console.error(`${red("✘")} ${err.message}`);
 
-    throw err
+    throw err;
   }
 
-  return script
-}
+  return script;
+};
 
 export const cli = async ({ args, env }: MainOpt): Promise<void> => {
-  const [unshellCommand, ...rest] = args
+  const [unshellCommand, ...rest] = args;
 
   switch (unshellCommand) {
-    case 'help': return help()
-    case 'run': return run({ args, env })
-    default: return help()
+    case "help":
+      return help();
+    case "run":
+      return run({ args, env });
+    default:
+      return help();
   }
-}
+};
 
 // TODO: uncomment when deno bundle works with import.meta.main
 // if (import.meta.main) {
-  const args = Deno.args
-const env = Deno.env.toObject()
+const args = Deno.args;
+const env = Deno.env.toObject();
 
-  cli({ args, env })
-    .then(() => Deno.exit(0))
-    .catch(() => Deno.exit(1))
+cli({ args, env })
+  .then(() => Deno.exit(0))
+  .catch(() => Deno.exit(1));
 // }

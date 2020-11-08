@@ -1,81 +1,82 @@
-import { Options, Script, Args, Engine } from "../type/index.d.ts"
-
+import { Args, Engine, Options, Script } from "../type/index.d.ts";
 
 const defaultOptions = {
-  env: {}
-}
+  env: {},
+};
 
 export const unshell = (opt: Options = defaultOptions): Engine => {
   return async (script: Script, ...args: Args): Promise<void> => {
-    assertUnshellScript(script)
+    assertUnshellScript(script);
 
-    const it = script(...args)
-    let cmd = await it.next()
+    const it = script(...args);
+    let cmd = await it.next();
 
     while (cmd.done === false) {
       if (isEmptyCmd(cmd.value)) {
-        cmd = await it.next()
-        continue
+        cmd = await it.next();
+        continue;
       }
 
-      console.log(`• ${cmd.value}`)
+      console.log(`• ${cmd.value}`);
 
       try {
-        const commands = cmd.value.split(' ')
+        const commands = cmd.value.split(" ");
 
         const process = Deno.run({
           cmd: commands,
           env: opt.env,
-          stdout: "piped"
-        })
-        const stdout = new TextDecoder('utf-8').decode(await process.output())
+          stdout: "piped",
+        });
+        const stdout = new TextDecoder("utf-8").decode(await process.output());
 
         if (stdout) {
-          console.log(`➜ ${stdout}`)
+          console.log(`➜ ${stdout}`);
         }
 
-        cmd = await it.next(stdout)
+        cmd = await it.next(stdout);
       } catch (err) {
         console.error({
           cmd: err.cmd,
-          stderr: err.stderr
-        })
+          stderr: err.stderr,
+        });
 
-        throw err
+        throw err;
       }
     }
 
     // last iteration
     if (cmd.done === true && cmd.value) {
-      console.log(`• ${cmd.value}`)
+      console.log(`• ${cmd.value}`);
 
-      const commands = cmd.value.split(' ')
+      const commands = cmd.value.split(" ");
 
       const process = Deno.run({
         cmd: commands,
         env: opt.env,
-        stdout: "piped"
-      })
-      const stdout = new TextDecoder('utf-8').decode(await process.output())
+        stdout: "piped",
+      });
+      const stdout = new TextDecoder("utf-8").decode(await process.output());
 
       if (stdout) {
-        console.log(`➜ ${stdout}`)
+        console.log(`➜ ${stdout}`);
       }
     }
-  }
-}
+  };
+};
 
 export const assertUnshellScript = (fn: Function): fn is Script => {
-  if (isGenerator(fn)) return true
-  if (isAsyncGenerator(fn)) return true
+  if (isGenerator(fn)) return true;
+  if (isAsyncGenerator(fn)) return true;
 
-  throw new Error('unshell: Invalid SCRIPT')
-}
+  throw new Error("unshell: Invalid SCRIPT");
+};
 
 const isGenerator = (fn: Function): fn is () => IterableIterator<string> =>
-  fn.constructor.name === 'GeneratorFunction'
+  fn.constructor.name === "GeneratorFunction";
 
-const isAsyncGenerator = (fn: Function): fn is () => AsyncIterableIterator<string> =>
-  fn.constructor.name === 'AsyncGeneratorFunction'
+const isAsyncGenerator = (
+  fn: Function,
+): fn is () => AsyncIterableIterator<string> =>
+  fn.constructor.name === "AsyncGeneratorFunction";
 
-const isEmptyCmd = (cmd: string): boolean => !cmd.length
+const isEmptyCmd = (cmd: string): boolean => !cmd.length;
