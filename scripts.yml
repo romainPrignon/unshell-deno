@@ -1,0 +1,66 @@
+allow:
+  - env
+  - read
+  - run
+
+env:
+  deps_path: deps.ts
+  src_path: src/
+  spec_path: spec/
+
+scripts:
+  deps:install:
+    desc: install dependencies
+    cmd: deno cache $deps_path
+    lock: lock.json
+    reload: true
+
+  deps:update:
+    desc: update dependencies
+    cmd: deno cache --lock-write $deps_path
+    lock: lock.json
+
+  compile:
+    desc: dd
+    cmd: cc
+
+  fmt:
+    desc: format codebase
+    cmd: deno fmt $src_path
+
+  lint:
+    desc: lint codebase
+    cmd: deno lint --unstable $src_path
+
+  test:
+    desc: test codebase
+    cmd:
+      pll:
+        - deno test --failfast $src_path
+        - deno test --failfast $spec_path
+    tsconfig: tsconfig.json
+
+  cover:
+    desc: test codebase with coverage
+    cmd:
+      pll:
+        - deno test --unstable --coverage $src_path
+        - deno test --unstable --coverage $spec_path
+    tsconfig: tsconfig.json
+
+  version:patch:
+    desc: dd
+    cmd: cc
+
+  version:minor:
+    desc: dd
+    cmd: cc
+
+  version:major:
+    desc: dd
+    cmd: cc
+
+  publish:
+    desc: dd
+    cmd: cc
+
