@@ -15,10 +15,18 @@ scripts:
     lock: lock.json
     reload: true
 
+  deps:install2:
+    desc: install using trex
+    cmd: trex install
+
   deps:update:
     desc: update dependencies
     cmd: deno cache --lock-write $deps_path
     lock: lock.json
+
+  deps:update2:
+    desc: update dependencies using trex
+    cmd: trex install --map
 
   compile:
     desc: dd

@@ -1,16 +1,17 @@
 TODO
 ====
-- "https://deno.land/std/fmt/colors.ts" => "https://deno.land/std/fmt/mod.ts"
-✔ make bin
+- make bin
   - dans la ci avec le chemin vers http
 ✔ make fmt
 ✔ make lint
 ✔ make coverage
 ✔ use as bin
+✔ alternative to make (velociraptor)
+- generate lockfile from import map
+- use lockfile
 - git hooks
 - use as lib
 - versionning
-- alternative to make (velociraptor)
 
 
 conclusion
@@ -21,3 +22,4 @@ conclusion
 - can't filter spec test
 - small config params for eslint and not configurable
 - can't configure coverage for now
+- handle version as v6.3.2 and 6.3.2 => no convention
