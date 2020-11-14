@@ -1,5 +1,4 @@
 import { Script } from "../type/index.d.ts";
-
 import { red, resolve } from "../deps.ts";
 import { assertUnshellScript, unshell } from "./unshell.ts";
 

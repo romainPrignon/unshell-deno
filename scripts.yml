@@ -15,18 +15,27 @@ scripts:
     lock: lock.json
     reload: true
 
-  deps:install2:
-    desc: install using trex
-    cmd: trex install
-
   deps:update:
     desc: update dependencies
     cmd: deno cache --lock-write $deps_path
     lock: lock.json
 
-  deps:update2:
+  deps:updateOrInstall-with-trex:
     desc: update dependencies using trex
-    cmd: trex install --map
+    cmd:
+      - trex install --map
+      - vr lock
+
+  deps:installFromLock-with-trex:
+    desc: install dependencies using trex
+    cmd:
+      - echo ???
+
+  lock:
+    desc: generate lock file
+    cmd: deno cache --lock-write --unstable $src_path/cli.ts
+    lock: lock.json
+    imap: import_map.json
 
   compile:
     desc: dd
