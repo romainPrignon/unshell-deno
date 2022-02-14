@@ -70,9 +70,35 @@ const pipe = (f1, ...fns) => {
   }
 }
 
+const arg = (cmd) => {
+  return {
+    get(_target, name) {
+      const cmdWithArg = cmd.concat(name)
+      console.log('cmdWithArg', cmdWithArg)
+
+      return new Proxy((...opts) => {
+        console.log('option de arg')
+        const c = cmdWithArg.concat(...opts)
+        return new Proxy((previous) => { // resolu a caude de ca !!
+          return run(c, previous) // on run ici
+        }, handler(c))
+      }, arg(cmdWithArg))
+    }
+  }
+}
+
 const unshell = () => new Proxy({}, {
-  get(_target, name) {
-    return handler().get(_target, name)
+  get(_target, bin) {
+    const cmd = []
+    const cmdWithBin = cmd.concat(bin)
+
+    return new Proxy((...opts) => {
+      console.log('option de unshell')
+      const c = cmdWithBin.concat(...opts)
+      return new Proxy((previous) => { // resolu a caude de ca !!
+        return run(c, previous) // on run ici
+      }, handler(c))
+    }, arg(cmdWithBin))
   }
 })
 
@@ -97,4 +123,5 @@ console.log('b', b)
 console.log('------------------------')
 const res1 = foo().bar.baz()
 foo('a').bar('b')()
+foo.bar('b')()
 res1()
