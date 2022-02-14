@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "lib": [
-      "dom",
-      "es2018",
-      "deno.ns"
+      "es2021",
+      "deno.ns",
+      "dom"
     ]
   }
 }

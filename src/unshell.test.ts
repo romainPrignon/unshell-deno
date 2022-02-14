@@ -1,7 +1,7 @@
 // type
-import { Script, Options } from "../type/index.d.ts";
+import { Options } from "../type/index.d.ts";
 
-import { assert, assertThrowsAsync } from "../deps.ts";
+import { assert } from "../deps.ts";
 
 // test
 import { unshell } from "./unshell.ts";
