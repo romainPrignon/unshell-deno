@@ -87,20 +87,23 @@ const arg = (cmd) => {
   }
 }
 
-const unshell = () => new Proxy({}, {
-  get(_target, bin) {
-    const cmd = []
-    const cmdWithBin = cmd.concat(bin)
+const Handler = (cmd = []) => {
+  return {
+    get(_target, bin) {
+      const cmdWithBin = cmd.concat(bin)
 
-    return new Proxy((...opts) => {
-      console.log('option de unshell')
-      const c = cmdWithBin.concat(...opts)
-      return new Proxy((previous) => { // resolu a caude de ca !!
-        return run(c, previous) // on run ici
-      }, handler(c))
-    }, arg(cmdWithBin))
+      return new Proxy((...opts) => {
+        console.log('option de unshell')
+        const c = cmdWithBin.concat(...opts)
+        return new Proxy((previous) => { // resolu a caude de ca !!
+          return run(c, previous) // on run ici
+        }, Handler(c))
+      }, Handler(cmdWithBin))
+    }
   }
-})
+}
+
+const unshell = () => new Proxy({}, Handler())
 
 const {
   foo,
