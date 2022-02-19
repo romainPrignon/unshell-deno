@@ -3,7 +3,7 @@
 type Command = Array<string>
 type Process = Deno.Process
 type OptObject = Record<string, string | number | boolean>
-type Opt = string | OptObject | ProcessBuilder
+type Opt = string | OptObject
 type Opts = Array<Opt>
 
 interface OptBuilder {
@@ -14,6 +14,6 @@ interface ProcessBuilder {
 }
 
 export type BinRecord = Record<string, ArgRecord & OptBuilder>
-export type ArgRecord = Record<string, OptBuilder & ProcessBuilder>
+export type ArgRecord = Record<string, OptBuilder>
 
 // export type Target = OptBuilder | ProcessBuilder

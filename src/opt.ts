@@ -1,15 +1,11 @@
-import { Command, OptObject, Opts, ArgRecord, ProcessBuilder } from "../type/index.d.ts";
-import { exec } from "./exec.ts";
-import { subarg } from "./subarg.ts";
+import { Command, OptObject, Opts } from "../type/index.d.ts"
 
 
-export const opt = (cmd: Command) => (...opts: Opts): ArgRecord | ProcessBuilder => {
-  const OptCommand = cmd.concat(format(...opts)).flat()
-
-  return subarg(exec(OptCommand) as ProcessBuilder)(OptCommand) as ArgRecord | ProcessBuilder
+export const opt = (cmd: Command, opts: Opts) => {
+  return cmd.concat(format(opts)).flat()
 }
 
-const format = (...opts: Opts): Command => {
+const format = (opts: Opts): Command => {
   // @ts-expect-error find why
   return opts.map(opt => {
     switch (true) {

@@ -1,23 +1,24 @@
-import type { ArgRecord, BinRecord, OptBuilder } from "../type/index.d.ts";
-import { arg } from './arg.ts'
+import { Command } from "../type/index.d.ts"
 
-export const bin = () => {
-  return {
-    get(target: BinRecord, name: string): ArgRecord | OptBuilder {
-      const binary = format(name)
+export const bin = (cmd: Command, name: string) => {
+  const binary = format(name)
 
-      console.log({ binary })
-      if (!isInPath(binary)) {
-        throw new Error("not in path")
-      }
-
-      return arg().get(target as unknown as ArgRecord, binary)
-    }
+  if (isArg(cmd)) {
+    return cmd.concat(binary)
   }
+
+  if (!isInPath(binary)) {
+    throw new Error("not in path")
+  }
+
+  return cmd.concat(binary)
 }
 
+
+/**
+ * TODO: better perf
+ */
 export const isInPath = (name: string): boolean => {
-  // TODO: perf ?
   const dirs = Deno.env.get('PATH')?.split(':') || []
 
   let isBin = false
@@ -35,6 +36,8 @@ export const isInPath = (name: string): boolean => {
   return isBin
 }
 
+export const format = (name: string) => name.replace("_", "-")
+
 const readDir = (dir: string) => {
   try {
     return Deno.readDirSync(dir)
@@ -45,7 +48,7 @@ const readDir = (dir: string) => {
   }
 }
 
-export const format = (name: string) => name.replace("_", "-")
+const isArg = (cmd: Command) => cmd.length
 
 // format pour node
 // const toCamel = (s) => {

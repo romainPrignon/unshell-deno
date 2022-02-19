@@ -1,45 +1,31 @@
-import { assertEquals } from "../deps.ts";
+import { assertExists } from "../deps.ts"
 
 import unshell from '../src/mod.ts'
 
-
-const binaries = [
-  'git',
-  'docker',
-  'docker_compose',
-  'apt',
-  'pwd',
-  'ls'
-]
-
-binaries.forEach(binary => {
-  Deno.test(
-    `given ${binary}, when we call ${binary}, then result should be an opt function`,
-    () => {
-      // Given
-      const bin = unshell()[binary]
-
-      // When
-      const res = bin()
-
-      // Then
-      assertEquals(typeof res, 'function')
-    }
-  )
-})
-
 Deno.test(
-  `given multiple binaries, when we destructure those binaries from unshell and call them, then result should be an opt function`,
+  `given a binary with arg, when we call with dot syntax, then there should be no error`,
   () => {
     // Given
-    const {docker, docker_compose} = unshell()
+    const { git } = unshell()
 
     // When
-    const docker_res = docker()
-    const docker_compose_res = docker_compose()
+    const res = git.remotes()
 
     // Then
-    assertEquals(typeof docker_res, 'function')
-    assertEquals(typeof docker_compose_res, 'function')
+    assertExists( res)
+  }
+)
+
+Deno.test(
+  `given a binary with arg, when we call with opt syntax, then there should be no error`,
+  () => {
+    // Given
+    const { git } = unshell()
+
+    // When
+    const res = git().remotes()
+
+    // Then
+    assertExists(res)
   }
 )

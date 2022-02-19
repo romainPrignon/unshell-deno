@@ -1,4 +1,4 @@
-import { assertEquals, assertThrows } from "../deps.ts";
+import { assertExists, assertThrows } from "../deps.ts";
 
 import unshell from '../src/mod.ts'
 
@@ -9,7 +9,7 @@ Deno.test(
     const { echo } = unshell()
 
     // Then
-    assertEquals(typeof echo, 'function');
+    assertExists(echo)
   }
 );
 
@@ -20,7 +20,7 @@ Deno.test(
     const { docker_compose } = unshell()
 
     // Then
-    assertEquals(typeof docker_compose, 'function');
+    assertExists(docker_compose)
   }
 );
 
@@ -35,8 +35,8 @@ Deno.test(
     const docker_compose_res = docker_compose()
 
     // Then
-    assertEquals(typeof docker_res, 'function')
-    assertEquals(typeof docker_compose_res, 'function')
+    assertExists(docker_res)
+    assertExists(docker_compose_res)
   }
 )
 

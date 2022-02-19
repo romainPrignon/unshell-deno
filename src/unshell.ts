@@ -1,5 +1,5 @@
-import { bin } from './bin.ts'
+import { handler } from './handler.ts'
 
 export const unshell = () => {
-  return new Proxy({}, bin())
+  return new Proxy<any>({}, handler())
 }
