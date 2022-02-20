@@ -6,6 +6,9 @@ export const resolve = async (process: Process) => {
   const stdout = new TextDecoder("utf-8").decode(await process.output())
   const stderr = new TextDecoder("utf-8").decode(await process.stderrOutput())
 
+  process.stdin?.close()
+  process.close()
+
   if (stderr) throw stderr
   return stdout
 

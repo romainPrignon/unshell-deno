@@ -1,6 +1,12 @@
 import { Command } from "../type/index.d.ts"
 
 export const bin = (cmd: Command, name: string) => {
+
+  // todo: check if necessary
+  if (typeof name !== 'string') {
+    return cmd
+  }
+
   const binary = format(name)
 
   if (isArg(cmd)) {
@@ -36,7 +42,7 @@ export const isInPath = (name: string): boolean => {
   return isBin
 }
 
-export const format = (name: string) => name.replace("_", "-")
+const format = (name: string) => name.replace("_", "-")
 
 const readDir = (dir: string) => {
   try {

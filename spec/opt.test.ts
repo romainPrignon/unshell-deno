@@ -1,4 +1,4 @@
-import { assertExists } from "../deps.ts"
+import { assertExists, assertThrows } from "../deps.ts"
 
 import unshell from '../src/mod.ts'
 
@@ -27,5 +27,16 @@ Deno.test(
 
     // Then
     assertExists(where_is_deno)
+  }
+)
+
+Deno.test(
+  `given ls, when we call it with a wrongly typed opt, then there should be an error`,
+  () => {
+    // Given
+    const { ls } = unshell()
+
+    // Then
+    assertThrows(() => ls(1))
   }
 )

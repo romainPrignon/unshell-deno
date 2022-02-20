@@ -1,10 +1,10 @@
-import type { Command, Process } from "../type/index.d.ts"
+import type { Command, Process, RunnableCommand } from "../type/index.d.ts"
 import { exec } from "./exec.ts"
 
 // todo: ce sera different pour asynciterable ?
 // todo: export () => Promise<Process> if needed
 
-export const run = (cmd: Command, prev: () => Promise<Process>) => {
+export const run = (cmd: Command, prev?: () => Promise<Process>) => {
   return async () => {
 
     const process = doRun(await execNestedCmd(cmd))
@@ -18,11 +18,11 @@ export const run = (cmd: Command, prev: () => Promise<Process>) => {
   }
 }
 
-const execNestedCmd = (cmd: Command): Promise<Command> => {
+const execNestedCmd = (cmd: Command): Promise<RunnableCommand> => {
   return Promise.all(cmd.map(async c => typeof c === 'function' ? await exec(c) : c).flat())
 }
 
-const doRun = (cmd: Command): Process => {
+const doRun = (cmd: RunnableCommand): Process => {
   return Deno.run({
     cmd: cmd,
     stdout: 'piped',
@@ -33,8 +33,11 @@ const doRun = (cmd: Command): Process => {
 
 const pipeProcess = async (process1: Process, process2: Process) => {
   const output = await process1.output()
-  await process2.stdin?.write(output)
-  process2.stdin?.close()
+  await process2.stdin?.write(output) // TODO: et si ya pas output mais une err dans process1 ?
+
+  process1.stdin?.close()
+  process1.stderr?.close()
+  process1.close()
 }
 
 // export const run = async (process: () => Promise<Deno.Process>): Promise<string> => {

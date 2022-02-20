@@ -6,10 +6,9 @@ export const opt = (cmd: Command, opts: Opts) => {
 }
 
 const format = (opts: Opts): Command => {
-  // @ts-expect-error find why
   return opts.map(opt => {
     switch (true) {
-      // case typeof opt === 'function': return (opt as unknown as Function)() // todo une fonction de type process
+      case typeof opt === 'function': return (opt as unknown as Function)() // todo une fonction de type process
       case typeof opt === 'string': return [opt]
       case typeof opt === 'object' && opt !== null: return formatObject(opt as OptObject)
       default: throw new Error(formatError(opt))
@@ -40,9 +39,12 @@ const formatObject = (opt: OptObject): Command => {
 
 const formatObjectKey = (name: string): string => name.replace("_", "-")
 
-const formatError = (opt: unknown): string => `Couldn't parse opt ${opt}
+const formatError = (opt: unknown): string => {
+  // console.log('opt', opt)
+  return `Couldn't parse opt ${opt}
 make sure to use either string or object syntax. see http://xxx
 `
+}
 
 const formatObjectError = (key: string, val: unknown): string => `Couldn't parse opt ${key} with value ${val}
 make sure to use either string or object syntax. see http://xxx
