@@ -9,14 +9,8 @@ export const resolve = async (process: Process) => {
   process.stdin?.close()
   process.close()
 
-  if (stderr) throw stderr
+  if (stderr) throw new Error(stderr) // todo: better error shape
+  // return process?.stdout && readLines(process?.stdout) // TODO
+
   return stdout
-
-  // defaut en stream ou pas ?
-  // normalement ca n'affecte que le dernier process
-  // c'est pas mal que ce soit par default car  c'est l'interet de passer par un lang de prog
-  // on peut avoir un helper pour buffer le stream
-
-  // todo: readLines(p.stdout)
-// return readLines(new StringReader(p))
 }
