@@ -24,7 +24,7 @@ export const bin = (cmd: Command, name: string) => {
 /**
  * TODO: better perf
  */
-export const isInPath = (name: string): boolean => {
+const isInPath = (name: string): boolean => {
   const dirs = Deno.env.get('PATH')?.split(':') || []
 
   let isBin = false
