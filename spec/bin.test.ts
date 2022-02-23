@@ -60,6 +60,7 @@ Deno.test(
 
     // then
     assertThrows(() => {
+      // deno-lint-ignore no-unused-vars
       const { echo } = unshell()
     })
 
