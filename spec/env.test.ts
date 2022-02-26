@@ -2,9 +2,6 @@ import { assertEquals } from "../deps.ts"
 
 import unshell, { exec } from '../src/mod.ts'
 
-// Deno.env.set("QUX", "qux")
-// await echo(Deno.env.get("QUX"))()
-
 Deno.test(
   `should be able to print env var througth js`,
   async () => {

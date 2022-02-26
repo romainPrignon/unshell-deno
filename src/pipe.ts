@@ -1,5 +1,5 @@
 
-type Fn = (arg?: unknown) => unknown
+type Fn = (arg?: unknown) => any // TODO
 
 export const pipe = (f1: Fn, ...fns: Array<Fn>) => {
   return () => {

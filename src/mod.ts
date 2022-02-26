@@ -1,6 +1,7 @@
 // for deno
 import { unshell } from './unshell.ts'
 export * from './exec.ts'
+export * from './pipe.ts'
 
 // TODO: no logic in this file
 const main = () => {

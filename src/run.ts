@@ -12,6 +12,8 @@ export const run = (cmd: Command, prev?: () => Promise<Process>) => {
     if (prev) {
       const prevProcess = await prev()
       await pipeProcess(prevProcess, process)
+    } else {
+      process.stdin?.close()
     }
 
     return process
@@ -35,7 +37,7 @@ const pipeProcess = async (process1: Process, process2: Process) => {
   const output = await process1.output()
   await process2.stdin?.write(output) // TODO: et si ya pas output mais une err dans process1 ?
 
-  process1.stdin?.close()
+  process2.stdin?.close()
   process1.stderr?.close()
   process1.close()
 }
