@@ -31,12 +31,12 @@ Deno.test(
 )
 
 Deno.test(
-  `given ls, when we call it with a wrongly typed opt, then there should be an error`,
+  `given ls, when we call it with a number opt, then there should be no error`,
   () => {
     // Given
     const { ls } = unshell()
 
     // Then
-    assertThrows(() => ls(1))
+    assertExists(ls(1))
   }
 )

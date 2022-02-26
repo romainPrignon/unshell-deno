@@ -34,22 +34,17 @@ const doRun = (cmd: RunnableCommand): Process => {
 }
 
 const pipeProcess = async (process1: Process, process2: Process) => {
-  const output = await process1.output()
-  await process2.stdin?.write(output) // TODO: et si ya pas output mais une err dans process1 ?
+  const stdout = await process1.output()
+  const stderr = new TextDecoder("utf-8").decode(await process1.stderrOutput())
 
+  await process2.stdin?.write(stdout)
   process2.stdin?.close()
-  process1.stderr?.close()
   process1.close()
+
+  if (stderr) {
+    process2.stdout?.close()
+    process2.stderr?.close()
+    process2.close()
+    throw new Error(stderr.trim())
+  }
 }
-
-// export const run = async (process: () => Promise<Deno.Process>): Promise<string> => {
-//   const decoder = new TextDecoder()
-
-//   const p = await process()
-
-//   const stdout = decoder.decode(await p.output())
-//   const stderr = decoder.decode(await p.stderrOutput())
-
-//   if (stderr) throw stderr // todo: trouver une bonne api
-//   return stdout // trouver une bonne api
-// }

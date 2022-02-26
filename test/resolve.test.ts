@@ -16,8 +16,11 @@ Deno.test(
     // When
     const res = await resolve(process)
 
+    // Clean
+    process.stdin?.close()
+
     // Then
-    assertEquals(res, 'foo\n') // TODO: fix \n
+    assertEquals(res, 'foo')
   }
 )
 
@@ -31,6 +34,9 @@ Deno.test(
       stderr: 'piped',
       stdin: 'piped'
     })
+
+    // Clean
+    process.stdin?.close()
 
     // Then
     await assertThrowsAsync(() => resolve(process))

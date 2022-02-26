@@ -1,6 +1,6 @@
 // test restore
 
-import { assert, assertEquals } from "../deps.ts"
+import { assertEquals } from "../deps.ts"
 
 import unshell, { exec } from '../src/mod.ts'
 
@@ -15,8 +15,8 @@ Deno.test(
     const bar = await exec(echo('bar'))
 
     // Then
-    assertEquals(foo, 'foo\n')
-    assertEquals(bar, 'bar\n')
+    assertEquals(foo, 'foo')
+    assertEquals(bar, 'bar')
   }
 )
 
@@ -32,7 +32,7 @@ Deno.test(
     const foo = await exec(echoFoo)
 
     // Then
-    assertEquals(foo, 'foo\n')
-    assertEquals(bar, 'bar\n')
+    assertEquals(foo, 'foo')
+    assertEquals(bar, 'bar')
   }
 )

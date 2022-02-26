@@ -13,6 +13,6 @@ Deno.test(
     const res = await exec(echo(Deno.env.get("QUX")))
 
     // Then
-    assertEquals(res, "qux\n") // TODO
+    assertEquals(res, "qux") // TODO
   }
 )

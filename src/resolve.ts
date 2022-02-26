@@ -8,8 +8,8 @@ export const resolve = async (process: Process) => {
 
   process.close()
 
-  if (stderr) throw new Error(stderr) // todo: better error shape
+  if (stderr) throw new Error(stderr.trim()) // todo: better error shape
   // return process?.stdout && readLines(process?.stdout) // TODO
 
-  return stdout
+  return stdout.trim()
 }

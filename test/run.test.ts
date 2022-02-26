@@ -11,7 +11,7 @@ Deno.test(
     const res = await run(cmd)()
 
     // clean
-    res.stdin?.close()
+    // TODO: should run clean this ?
     res.stdout?.close()
     res.stderr?.close()
     res.close()
@@ -39,7 +39,7 @@ Deno.test(
     const res = await run(cmd)()
 
     // clean
-    res.stdin?.close()
+    // res.stdin?.close()
     res.stdout?.close()
     res.stderr?.close()
     res.close()
@@ -53,9 +53,9 @@ Deno.test(
   `given a command with a prev process, when we run it, then we should get a process`,
   async () => {
     // Given
-    const cmd = ['echo']
+    const cmd = ['base64']
     const prev = async () => await Deno.run({
-      cmd: ['base64', 'foo'],
+      cmd: ['echo', 'foo'],
       stdout: 'piped',
       stderr: 'piped',
       stdin: 'piped'

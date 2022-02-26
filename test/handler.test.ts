@@ -60,7 +60,6 @@ Deno.test(
     const echo = handler(cmd).get({}, name)
     const res = await echo(foo)()()
 
-    res.stdin.close()
     res.stdout.close()
     res.stderr.close()
     res.close()

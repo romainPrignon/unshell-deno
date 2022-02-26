@@ -10,6 +10,7 @@ const format = (opts: Opts): Command => {
     switch (true) {
       case typeof opt === 'function': return (opt as unknown as Function)() // todo une fonction de type process
       case typeof opt === 'string': return [opt]
+      case typeof opt === 'number': return [opt]
       case typeof opt === 'object' && opt !== null: return formatObject(opt as OptObject)
       default: throw new Error(formatError(opt))
     }

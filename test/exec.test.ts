@@ -17,6 +17,6 @@ Deno.test(
     const res = await exec(cmd)
 
     // Then
-    assertEquals(res, 'foo\n') // TODO: \n
+    assertEquals(res, 'foo')
   }
 );
