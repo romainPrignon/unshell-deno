@@ -11,7 +11,6 @@ Deno.test(
     const res = await run(cmd)()
 
     // clean
-    // TODO: should run clean this ?
     res.stdout?.close()
     res.stderr?.close()
     res.close()
@@ -25,21 +24,20 @@ Deno.test(
   `given a command with a nested command, when we run it, then we should get a process`,
   async () => {
     // Given
-    const whichDeno = () => async () => {
-      return await Deno.run({
-        cmd: ['which', 'deno'],
-        stdout: 'piped',
-        stderr: 'piped',
-        stdin: 'piped'
-      })
-    }
+    const p = Deno.run({
+      cmd: ['which', 'deno'],
+      stdout: 'piped',
+      stderr: 'piped',
+      stdin: 'piped'
+    })
+    const whichDeno = () => async () => await p
     const cmd = ['echo', whichDeno]
 
     // When
     const res = await run(cmd)()
 
     // clean
-    // res.stdin?.close()
+    p.stdin?.close()
     res.stdout?.close()
     res.stderr?.close()
     res.close()
@@ -54,18 +52,19 @@ Deno.test(
   async () => {
     // Given
     const cmd = ['base64']
-    const prev = async () => await Deno.run({
+    const p = Deno.run({
       cmd: ['echo', 'foo'],
       stdout: 'piped',
       stderr: 'piped',
       stdin: 'piped'
     })
+    const prev = async () => await p
 
     // When
     const res = await run(cmd, prev)()
 
     // clean
-    res.stdin?.close()
+    p.stdin?.close()
     res.stdout?.close()
     res.stderr?.close()
     res.close()
