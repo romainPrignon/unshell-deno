@@ -13,6 +13,21 @@ Deno.test(
     const res = await exec(echo(Deno.env.get("QUX")))
 
     // Then
-    assertEquals(res, "qux") // TODO
+    assertEquals(res, "qux")
+  }
+)
+
+Deno.test(
+  `should be able to print env var througth unshell`,
+  async () => {
+    // Given
+    const env = { QUX: "qux"}
+    const { printenv } = unshell({ env })
+
+    // When
+    const res = await exec(printenv("QUX"))
+
+    // Then
+    assertEquals(res, "qux")
   }
 )

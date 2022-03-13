@@ -1,16 +1,19 @@
-import type { Command, Process, RunnableCommand } from "../type/index.d.ts"
+import type { Command, Process, RunnableCommand, RunOptions } from "../type/index.d.ts"
 import { exec } from "./exec.ts"
 
 // todo: ce sera different pour asynciterable ?
 // todo: export () => Promise<Process> if needed
 
-export const run = (cmd: Command, prev?: () => Promise<Process>) => {
+type PrevProcess = () => Promise<Process>
+type RunOptionsWithPrev = RunOptions & { prev?: PrevProcess }
+
+export const run = (cmd: Command, opt?: RunOptionsWithPrev) => {
   return async () => {
 
-    const process = doRun(await execNestedCmd(cmd))
+    const process = doRun(await execNestedCmd(cmd), opt)
 
-    if (prev) {
-      const prevProcess = await prev()
+    if (opt?.prev) {
+      const prevProcess = await opt.prev()
       await pipeProcess(prevProcess, process)
     } else {
       process.stdin?.close()
@@ -24,9 +27,11 @@ const execNestedCmd = (cmd: Command): Promise<RunnableCommand> => {
   return Promise.all(cmd.map(async c => typeof c === 'function' ? await exec(c) : c).flat())
 }
 
-const doRun = (cmd: RunnableCommand): Process => {
+const doRun = (cmd: RunnableCommand, opt?: RunOptions): Process => {
   return Deno.run({
     cmd: cmd,
+    cwd: opt?.cwd,
+    env: opt?.env,
     stdout: 'piped',
     stderr: 'piped',
     stdin: 'piped'

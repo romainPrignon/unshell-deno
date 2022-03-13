@@ -36,3 +36,21 @@ Deno.test(
     assertEquals(bar, 'bar')
   }
 )
+
+Deno.test(
+  `overriding unshell options with exec options should work`,
+  async () => {
+    // Given
+    const unshellEnv = {FOO: 'foo', BAR: 'bar' }
+    const execEnv = {FOO: 'bar'}
+    const { printenv } = unshell({env: unshellEnv})
+
+    // When
+    const foo = await exec(printenv('FOO'), { env: execEnv })
+    const bar = await exec(printenv('BAR'), { env: execEnv })
+
+    // Then
+    assertEquals(foo, 'bar')
+    assertEquals(bar, 'bar')
+  }
+)

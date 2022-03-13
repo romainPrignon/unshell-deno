@@ -61,10 +61,50 @@ Deno.test(
     const prev = async () => await p
 
     // When
-    const res = await run(cmd, prev)()
+    const res = await run(cmd, { prev })()
 
     // clean
     p.stdin?.close()
+    res.stdout?.close()
+    res.stderr?.close()
+    res.close()
+
+    // Then
+    assert(res instanceof Deno.Process)
+  }
+)
+
+Deno.test(
+  `given a command, when we run it with env params, then we should get a process`,
+  async () => {
+    // Given
+    const cmd = ['ls']
+    const env = {}
+
+    // When
+    const res = await run(cmd, { env })()
+
+    // clean
+    res.stdout?.close()
+    res.stderr?.close()
+    res.close()
+
+    // Then
+    assert(res instanceof Deno.Process)
+  }
+)
+
+Deno.test(
+  `given a command, when we run it with cwd params, then we should get a process`,
+  async () => {
+    // Given
+    const cmd = ['ls']
+    const cwd = '/tmp'
+
+    // When
+    const res = await run(cmd, { cwd })()
+
+    // clean
     res.stdout?.close()
     res.stderr?.close()
     res.close()

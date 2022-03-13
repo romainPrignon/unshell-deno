@@ -1,8 +1,12 @@
 // type ArgBuilder = () => void // todo
 
-type FutureProcess = () => () => Promise<Process>
+type FutureProcess = (opt?: RunOptions) => () => Promise<Process>
 type Command = Array<string | FutureProcess>
 type RunnableCommand = Array<string>
+type RunOptions = {
+  env?: Record<string, string>,
+  cwd?: string
+}
 
 type Process = Deno.Process
 type OptObject = Record<string, string | number | boolean>

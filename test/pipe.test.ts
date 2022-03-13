@@ -12,6 +12,6 @@ Deno.test(
 
     const res2 = pipe(f1, f2)
 
-    assertEquals(res2(), res1)
+    assertEquals(res2(), {prev: res1})
   }
 )
