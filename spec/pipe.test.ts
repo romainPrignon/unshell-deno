@@ -9,7 +9,7 @@ Deno.test(
     const { echo, base64 } = unshell()
 
     // When
-    const res = await exec(pipe(echo('foo'), base64()))
+    const {stdout: res} = await exec(pipe(echo('foo'), base64()))
 
     // Then
     assertEquals(res, 'Zm9vCg==')
@@ -23,7 +23,7 @@ Deno.test(
     const { echo, base64 } = unshell()
 
     // When
-    const res = await exec(pipe(echo('foo'), base64(), base64()))
+    const { stdout: res } = await exec(pipe(echo('foo'), base64(), base64()))
 
     // Then
     assertEquals(res, 'Wm05dkNnPT0K')

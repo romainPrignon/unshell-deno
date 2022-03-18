@@ -10,7 +10,7 @@ Deno.test(
     const { echo } = unshell()
 
     // When
-    const res = await exec(echo(Deno.env.get("QUX")))
+    const { stdout: res } = await exec(echo(Deno.env.get("QUX")))
 
     // Then
     assertEquals(res, "qux")
@@ -25,7 +25,7 @@ Deno.test(
     const { printenv } = unshell({ env })
 
     // When
-    const res = await exec(printenv("QUX"))
+    const { stdout: res } = await exec(printenv("QUX"))
 
     // Then
     assertEquals(res, "qux")

@@ -24,7 +24,17 @@ export const run = (cmd: Command, opt?: RunOptionsWithPrev) => {
 }
 
 const execNestedCmd = (cmd: Command): Promise<RunnableCommand> => {
-  return Promise.all(cmd.map(async c => typeof c === 'function' ? await exec(c) : c).flat())
+  return Promise.all(cmd.map(async c => {
+    let resolvedCmd
+    if (typeof c === 'function') {
+      const maybeResolvedCmd = await exec(c)
+      resolvedCmd = maybeResolvedCmd.stderr ? maybeResolvedCmd.stderr : maybeResolvedCmd.stdout
+    } else {
+      resolvedCmd = c
+    }
+
+    return resolvedCmd
+  }).flat())
 }
 
 const doRun = (cmd: RunnableCommand, opt?: RunOptions): Process => {

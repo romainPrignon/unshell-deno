@@ -1,5 +1,6 @@
 // type ArgBuilder = () => void // todo
 
+type ProcessResult = { stdout: string, stderr: string }
 type FutureProcess = (opt?: RunOptions) => () => Promise<Process>
 type Command = Array<string | FutureProcess>
 type RunnableCommand = Array<string>

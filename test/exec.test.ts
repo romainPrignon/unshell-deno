@@ -17,7 +17,7 @@ Deno.test(
     const cmd = () => async () => await p
 
     // When
-    const res = await exec(cmd)
+    const { stdout: res } = await exec(cmd)
 
     // clean
     p.stdin?.close()
@@ -46,7 +46,7 @@ Deno.test(
     const env = {FOO: 'bar'}
 
     // When
-    const res = await exec(cmd, { env })
+    const { stdout: res } = await exec(cmd, { env })
 
     // clean
     // @ts-expect-error p should be assigned by now
@@ -84,6 +84,6 @@ Deno.test(
     p?.stdin?.close()
 
     // Then
-    assert(res.includes(currentFile))
+    assert(res.stdout.includes(currentFile))
   }
 );

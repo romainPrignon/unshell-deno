@@ -11,8 +11,8 @@ Deno.test(
     const { echo } = unshell()
 
     // When
-    const foo = await exec(echo('foo'))
-    const bar = await exec(echo('bar'))
+    const { stdout: foo } = await exec(echo('foo'))
+    const { stdout: bar } = await exec(echo('bar'))
 
     // Then
     assertEquals(foo, 'foo')
@@ -28,8 +28,8 @@ Deno.test(
 
     // When
     const echoFoo = echo('foo')
-    const bar = await exec(echo('bar'))
-    const foo = await exec(echoFoo)
+    const { stdout: bar } = await exec(echo('bar'))
+    const { stdout: foo } = await exec(echoFoo)
 
     // Then
     assertEquals(foo, 'foo')
@@ -46,8 +46,8 @@ Deno.test(
     const { printenv } = unshell({env: unshellEnv})
 
     // When
-    const foo = await exec(printenv('FOO'), { env: execEnv })
-    const bar = await exec(printenv('BAR'), { env: execEnv })
+    const {stdout: foo} = await exec(printenv('FOO'), { env: execEnv })
+    const {stdout: bar} = await exec(printenv('BAR'), { env: execEnv })
 
     // Then
     assertEquals(foo, 'bar')

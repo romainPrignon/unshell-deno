@@ -7,7 +7,7 @@ Deno.test(`echo foo`, async () => {
   const { echo } = unshell()
 
   // When
-  const res = await exec(echo('foo'))
+  const {stdout: res} = await exec(echo('foo'))
 
   // Then
   assertEquals(res, 'foo')
@@ -18,7 +18,7 @@ Deno.test(`echo $(which deno)`, async () => {
   const { echo, which } = unshell()
 
   // When
-  const res = await exec(echo(which('deno')))
+  const {stdout: res} = await exec(echo(which('deno')))
 
   // Then
   assertEquals(res, '/home/romainprignon/.deno/bin/deno')
@@ -29,7 +29,7 @@ Deno.test(`git remote show origin -n | head -2`, async () => {
   const { git, head } = unshell()
 
   // When
-  const res = await exec(pipe(git.remote.show('origin', '-n'), head('-2')))
+  const {stdout: res} = await exec(pipe(git.remote.show('origin', '-n'), head('-2')))
 
   // Then
   assertEquals(res, `* remote origin
@@ -46,7 +46,7 @@ Deno.test(`git log | uniq -c | tail -1`, async () => {
     uniq({c: true}),
     tail('-1')
   )
-  const res = await exec(cmd)
+  const {stdout: res} = await exec(cmd)
 
   // Then
   assertEquals(res, `1     initial commit`)
@@ -57,11 +57,11 @@ Deno.test(`pwd`, async () => {
   const { pwd, basename } = unshell()
 
   // When
-  const cwd = await exec(pwd())
-  const name = await exec(basename(cwd))
+  const {stdout: cwd} = await exec(pwd())
+  const { stdout: res } = await exec(basename(cwd))
 
   // Then
-  assertEquals(name, "unshell-deno")
+  assertEquals(res, "unshell-deno")
 })
 
 Deno.test(`find . -type f -name makefile`, async () => {
@@ -69,7 +69,7 @@ Deno.test(`find . -type f -name makefile`, async () => {
   const { find } = unshell()
 
   // When
-  const res = await exec(find('.', '-type', 'f', '-name', 'README.md'))
+  const {stdout: res} = await exec(find('.', '-type', 'f', '-name', 'README.md'))
 
   // Then
   assertEquals(res, `./README.md`)
@@ -100,7 +100,7 @@ Deno.test(`bash -c "echo hello"`, async () => {
   const { bash } = unshell()
 
   // When
-  const res = await exec(bash('-c', 'echo hello'))
+  const {stdout: res} = await exec(bash('-c', 'echo hello'))
 
   // Then
   assertEquals(res, `hello`)

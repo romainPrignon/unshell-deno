@@ -16,6 +16,6 @@ Deno.test(
     const res = await exec(ls(), { cwd: execCwd })
 
     // Then
-    assert(res.includes(currentFile))
+    assert(res.stdout.includes(currentFile))
   }
 )
