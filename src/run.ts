@@ -1,19 +1,16 @@
-import type { Command, Process, RunnableCommand, RunOptions } from "../type/index.d.ts"
+import type { Command, Process, RunnableCommand } from "../type/index.d.ts"
 import { exec } from "./exec.ts"
 
 // todo: ce sera different pour asynciterable ?
 // todo: export () => Promise<Process> if needed
 
-type PrevProcess = () => Promise<Process>
-type RunOptionsWithPrev = RunOptions & { prev?: PrevProcess }
-
-export const run = (cmd: Command, opt?: RunOptionsWithPrev) => {
+export const run = (cmd: Command, prev?: () => Promise<Process>) => {
   return async () => {
 
-    const process = doRun(await execNestedCmd(cmd), opt)
+    const process = doRun(await execNestedCmd(cmd))
 
-    if (opt?.prev) {
-      const prevProcess = await opt.prev()
+    if (prev) {
+      const prevProcess = await prev()
       await pipeProcess(prevProcess, process)
     } else {
       process.stdin?.close()
@@ -24,24 +21,12 @@ export const run = (cmd: Command, opt?: RunOptionsWithPrev) => {
 }
 
 const execNestedCmd = (cmd: Command): Promise<RunnableCommand> => {
-  return Promise.all(cmd.map(async c => {
-    let resolvedCmd
-    if (typeof c === 'function') {
-      const maybeResolvedCmd = await exec(c)
-      resolvedCmd = maybeResolvedCmd.stderr ? maybeResolvedCmd.stderr : maybeResolvedCmd.stdout
-    } else {
-      resolvedCmd = c
-    }
-
-    return resolvedCmd
-  }).flat())
+  return Promise.all(cmd.map(async c => typeof c === 'function' ? await exec(c) : c).flat())
 }
 
-const doRun = (cmd: RunnableCommand, opt?: RunOptions): Process => {
+const doRun = (cmd: RunnableCommand): Process => {
   return Deno.run({
     cmd: cmd,
-    cwd: opt?.cwd,
-    env: opt?.env,
     stdout: 'piped',
     stderr: 'piped',
     stdin: 'piped'

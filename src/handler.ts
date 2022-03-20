@@ -1,11 +1,10 @@
-import { Command, Opts, Process, RunOptions } from "../type/index.d.ts"
+import { Command, Opts, Process } from "../type/index.d.ts"
 import { bin } from './bin.ts'
 import { opt } from './opt.ts'
 import { run } from "./run.ts"
 
-type RunOptionsWithPrev = RunOptions & { prev?: Process }
 
-export const handler = <T>(cmd: Command = [], options?: RunOptions) => {
+export const handler = <T>(cmd: Command = []) => {
   return {
     get(_target: T, name: string): any {
 
@@ -15,14 +14,11 @@ export const handler = <T>(cmd: Command = [], options?: RunOptions) => {
 
         const cmdWithOpt = opt(cmdWithBin, opts)
 
-        return new Proxy((runOptions: RunOptionsWithPrev) => {
-          const finalEnv = {...options?.env, ...runOptions?.env}
-          const finalCwd = runOptions?.cwd ?? options?.cwd
-
+        return new Proxy((prev: Process) => {
           // @ts-expect-error prev
-          return run(cmdWithOpt, { prev: runOptions?.prev, env: finalEnv, cwd: finalCwd })
-        }, handler(cmdWithOpt, options))
-      }, handler(cmdWithBin, options))
+          return run(cmdWithOpt, prev)
+        }, handler(cmdWithOpt))
+      }, handler(cmdWithBin))
     }
   }
 }

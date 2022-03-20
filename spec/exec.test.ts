@@ -11,8 +11,8 @@ Deno.test(
     const { echo } = unshell()
 
     // When
-    const { stdout: foo } = await exec(echo('foo'))
-    const { stdout: bar } = await exec(echo('bar'))
+    const foo = await exec(echo('foo'))
+    const bar = await exec(echo('bar'))
 
     // Then
     assertEquals(foo, 'foo')
@@ -28,29 +28,11 @@ Deno.test(
 
     // When
     const echoFoo = echo('foo')
-    const { stdout: bar } = await exec(echo('bar'))
-    const { stdout: foo } = await exec(echoFoo)
+    const bar = await exec(echo('bar'))
+    const foo = await exec(echoFoo)
 
     // Then
     assertEquals(foo, 'foo')
-    assertEquals(bar, 'bar')
-  }
-)
-
-Deno.test(
-  `overriding unshell options with exec options should work`,
-  async () => {
-    // Given
-    const unshellEnv = {FOO: 'foo', BAR: 'bar' }
-    const execEnv = {FOO: 'bar'}
-    const { printenv } = unshell({env: unshellEnv})
-
-    // When
-    const {stdout: foo} = await exec(printenv('FOO'), { env: execEnv })
-    const {stdout: bar} = await exec(printenv('BAR'), { env: execEnv })
-
-    // Then
-    assertEquals(foo, 'bar')
     assertEquals(bar, 'bar')
   }
 )

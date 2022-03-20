@@ -1,4 +1,4 @@
-import { assert, assertEquals } from "../deps.ts"
+import { assert, assertThrowsAsync } from "../deps.ts"
 
 import unshell, {exec} from '../src/mod.ts'
 
@@ -8,12 +8,8 @@ Deno.test(
     // Given
     const { cat } = unshell()
 
-    // When
-    const { stdout, stderr } = await exec(cat('/etc/shadow'))
-
     // Then
-    assertEquals(stdout, "")
-    assertEquals(stderr, "cat: /etc/shadow: Permission denied")
+    await assertThrowsAsync(() => exec(cat('/etc/shadow')))
   }
 )
 
@@ -24,7 +20,7 @@ Deno.test(
     const { sudo } = unshell()
 
     // When
-    const {stdout: res} = await exec(sudo.cat('/etc/shadow'))
+    const res = await exec(sudo.cat('/etc/shadow'))
 
     // Then
     assert(typeof res === 'string')

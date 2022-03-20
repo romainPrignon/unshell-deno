@@ -1,4 +1,4 @@
-import { assertEquals, assert } from "../deps.ts"
+import { assertEquals, assertThrowsAsync } from "../deps.ts"
 
 import { resolve } from '../src/resolve.ts'
 
@@ -14,7 +14,7 @@ Deno.test(
     })
 
     // When
-    const { stdout: res } = await resolve(process)
+    const res = await resolve(process)
 
     // Clean
     process.stdin?.close()
@@ -38,11 +38,7 @@ Deno.test(
     // Clean
     process.stdin?.close()
 
-    // When
-    const {stdout, stderr} = await resolve(process)
-
     // Then
-    assertEquals(stdout, "")
-    assert(stderr.startsWith("git: 'foo' is not a git command"))
+    await assertThrowsAsync(() => resolve(process))
   }
 )
