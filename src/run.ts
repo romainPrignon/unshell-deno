@@ -27,6 +27,7 @@ const execNestedCmd = (cmd: Command): Promise<RunnableCommand> => {
 const doRun = (cmd: RunnableCommand): Process => {
   return Deno.run({
     cmd: cmd,
+    env: Deno.env.toObject(),
     stdout: 'piped',
     stderr: 'piped',
     stdin: 'piped'
