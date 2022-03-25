@@ -68,3 +68,17 @@ Deno.test(
     assert(res instanceof Deno.Process)
   }
 )
+
+Deno.test(
+  `given a handler, when we call cd, it should return the custom cd command`,
+  () => {
+    // Given
+    const name = "cd"
+
+    // Then
+    const cd = handler().get({}, name)
+
+    // Then
+    assert(cd instanceof Function)
+  }
+)

@@ -28,6 +28,7 @@ const doRun = (cmd: RunnableCommand): Process => {
   return Deno.run({
     cmd: cmd,
     env: Deno.env.toObject(),
+    cwd: Deno.cwd(),
     stdout: 'piped',
     stderr: 'piped',
     stdin: 'piped'
