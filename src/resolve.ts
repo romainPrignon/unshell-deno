@@ -9,7 +9,6 @@ export const resolve = async (process: Process) => {
   process.close()
 
   if (!success) throw new Error(stderr.trim())
-  // return process?.stdout && readLines(process?.stdout) // TODO
 
   return stdout.trim()
 }
