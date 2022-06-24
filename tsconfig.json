@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "lib": [
-      "es2021",
-      "deno.ns",
-      "dom"
-    ]
-  }
-}

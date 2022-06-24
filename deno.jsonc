@@ -1,0 +1,43 @@
+{
+  "tasks": {
+    "install": "deno cache --no-check --reload src/mod.ts",
+    "dev": "deno test --cached-only --allow-run --allow-env --allow-read --watch test/",
+    "debug": "deno test --cached-only --allow-run --allow-env --allow-read --inspect-brk", // deno task debug [files]...
+    "check": "deno check src/mod.ts",
+    "fmt": "deno fmt",
+    "lint": "deno lint",
+    "test": "deno test --no-check --cached-only --allow-run --allow-env --allow-read test/",
+    "spec": "deno test --no-check --cached-only --allow-run --allow-env --allow-read spec/",
+    "cov": "deno test --no-check --cached-only --allow-run --allow-env --allow-read --coverage=coverage/",
+    "coverage": "deno coverage coverage/"
+  },
+  "importMap": "import_map.json",
+  "lint": {
+    "files": {
+      "include": [
+        "spec/",
+        "src/",
+        "test/",
+        "type/"
+      ]
+    },
+    "rules": {
+      "exclude": [
+        "no-explicit-any"
+      ]
+    }
+  },
+  "fmt": {
+    "files": {
+      "include": [
+        "spec/",
+        "src/",
+        "test/",
+        "type/"
+      ]
+    },
+    "options": {
+      "lineWidth": 120
+    }
+  }
+}
