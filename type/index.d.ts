@@ -1,6 +1,6 @@
 // type ArgBuilder = () => void // todo
 
-type FutureProcess = () => () => Promise<Process>
+type FutureProcess = (prev?: Process) => () => Promise<Process>
 type Command = Array<string | FutureProcess>
 type RunnableCommand = Array<string>
 

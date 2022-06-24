@@ -1,4 +1,5 @@
 import type { Command, Process, RunnableCommand } from "../type/index.d.ts"
+import { iterateReader } from "https://deno.land/std/streams/conversion.ts"
 import { exec } from "./exec.ts"
 
 // todo: ce sera different pour asynciterable ?
@@ -36,17 +37,18 @@ const doRun = (cmd: RunnableCommand): Process => {
 }
 
 const pipeProcess = async (process1: Process, process2: Process) => {
-  const stdout = await process1.output()
   const stderr = new TextDecoder("utf-8").decode(await process1.stderrOutput())
-
-  await process2.stdin?.write(stdout)
-  process2.stdin?.close()
-  process1.close()
-
   if (stderr) {
     process2.stdout?.close()
     process2.stderr?.close()
     process2.close()
     throw new Error(stderr.trim())
   }
+
+  for await (const chunk of iterateReader(process1.stdout!)) {
+    process2.stdin?.write(chunk)
+  }
+  process1.close()
+  process1.stdout!.close()
+  process2.stdin?.close()
 }
