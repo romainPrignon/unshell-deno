@@ -1,26 +1,25 @@
-import { assertEquals } from "../deps.ts"
+import { assertEquals } from "testing/asserts.ts";
 
-import { exec } from '../src/exec.ts'
-
+import { exec } from "../src/exec.ts";
 
 Deno.test(
   "given a future process, when we exec it, then we should get the result",
   async () => {
     const p = Deno.run({
-      cmd: ['echo', 'foo'],
-      stdout: 'piped',
-      stderr: 'piped',
-      stdin: 'piped'
-    })
-    const cmd = () => async () => await p
+      cmd: ["echo", "foo"],
+      stdout: "piped",
+      stderr: "piped",
+      stdin: "piped",
+    });
+    const cmd = () => async () => await p;
 
     // When
-    const res = await exec(cmd)
+    const res = await exec(cmd);
 
     // clean
-    p.stdin?.close()
+    p.stdin?.close();
 
     // Then
-    assertEquals(res, 'foo')
-  }
+    assertEquals(res, "foo");
+  },
 );

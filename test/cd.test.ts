@@ -1,17 +1,17 @@
-import { assertEquals } from "../deps.ts"
+import { assertEquals } from "testing/asserts.ts";
 
-import { cd } from '../src/cd.ts'
+import { cd } from "../src/cd.ts";
 
 Deno.test(
   `we should only allow string name parameters, otherwise return cmd`,
   () => {
     // Given
-    const newPath = '/tmp'
+    const newPath = "/tmp";
 
     // Given
-    cd(newPath)
+    cd(newPath);
 
     // Then
-    assertEquals(Deno.cwd(), newPath)
-  }
-)
+    assertEquals(Deno.cwd(), newPath);
+  },
+);
