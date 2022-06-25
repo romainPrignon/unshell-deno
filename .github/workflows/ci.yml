@@ -29,5 +29,5 @@ jobs:
       - name: cov
         run: deno task cov
 
-      - name: coverage
-        run: deno task coverage
+      - name: coverage report
+        run: deno task report

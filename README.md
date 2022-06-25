@@ -43,8 +43,10 @@ const fetchContainerIds = async () => {
 await fetchContainerIds()
   .then(pause)
 ```
-You just froze all your containers  
-You can see other examples inside spec/ folder
+- try to run a container `docker run -it --rm ubuntu bash`
+- then `deno run --allow-read --allow-env --allow-run pause.js` 
+- You just froze a container
+- You can see other examples inside spec/ folder
 
 ## Contribute
 - Please do :)
