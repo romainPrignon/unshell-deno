@@ -1,3 +1,9 @@
-export { assert, assertEquals, assertThrows, assertThrowsAsync } from "https://deno.land/std/testing/asserts.ts";
-export { red } from "https://deno.land/std/fmt/colors.ts";
-export { resolve } from "https://deno.land/std/path/mod.ts";
+import * as path from "path";
+import * as asserts from "testing/asserts.ts"
+import * as io from "io"
+
+export {
+  path,
+  asserts,
+  io
+}

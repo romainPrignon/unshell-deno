@@ -1,2 +1,2 @@
-run:
-	deno run -c tsconfig.json --lock=lock.json --cached-only --allow-run --allow-env --allow-read src/cli.ts ${cmd}
+release: ## make release version=0.1.2
+	git tag -a v${version} -m "🔖 Release v${version}" && git push --follow-tags

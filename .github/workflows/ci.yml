@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deno: [1.21, 1.22, 1.23]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: denoland/setup-deno@v1.0.0
+        with:
+          deno-version: ${{ matrix.deno }}
+
+      - name: install
+        run: deno task install
+
+      - name: check
+        run: deno task check
+
+      - name: lint
+        run: deno task lint
+
+      - name: cov
+        run: deno task cov
+
+      - name: coverage
+        run: deno task coverage

@@ -1,21 +1,18 @@
-interface MyIterableIterator<T, TReturn = any, TNext = undefined> extends Iterator<T, TReturn, TNext> {
-  [Symbol.iterator](): MyIterableIterator<T, TReturn, TNext>;
+type FutureProcess = () => () => Promise<Process>;
+type Command = Array<string | FutureProcess>;
+type RunnableCommand = Array<string>;
+
+type Process = Deno.Process;
+type OptObject = Record<string, string | number | boolean>;
+type Opt = string | OptObject;
+type Opts = Array<Opt>;
+
+interface OptBuilder {
+  (...args: Opts): ArgRecord & ProcessBuilder;
+}
+interface ProcessBuilder {
+  (prev?: Process): Promise<Process>;
 }
 
-interface MyAsyncIterableIterator<T, TReturn = any, TNext = undefined> extends AsyncIterator<T, TReturn, TNext> {
-  [Symbol.iterator](): MyAsyncIterableIterator<T, TReturn, TNext>;
-}
-
-// ----
-
-export type Options = {
-  env: Record<string, string>
-}
-
-export type Command = string
-
-export type Args = Array<unknown>
-
-export type Script = (...args: Args) => MyIterableIterator<Command, Command, Command> | MyAsyncIterableIterator<Command, Command, Command>
-
-export type Engine = (script: Script, ...args: Args) => Promise<void>
+export type BinRecord = Record<string, ArgRecord & OptBuilder>;
+export type ArgRecord = Record<string, OptBuilder>;
