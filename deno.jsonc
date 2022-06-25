@@ -9,9 +9,8 @@
     "test": "deno test --no-check --cached-only --allow-run --allow-env --allow-read test/",
     "spec": "deno test --no-check --cached-only --allow-run --allow-env --allow-read spec/",
     "cov": "deno test --no-check --cached-only --allow-run --allow-env --allow-read --coverage=coverage/",
-    "coverage": "deno coverage coverage/"
+    "report": "deno coverage coverage/"
   },
-  "importMap": "import_map.json",
   "lint": {
     "files": {
       "include": [
