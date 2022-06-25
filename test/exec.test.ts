@@ -1,4 +1,4 @@
-import { assertEquals } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
 import { exec } from "../src/exec.ts";
 
@@ -20,6 +20,6 @@ Deno.test(
     p.stdin?.close();
 
     // Then
-    assertEquals(res, "foo");
+    asserts.assertEquals(res, "foo");
   },
 );

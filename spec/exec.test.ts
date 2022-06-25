@@ -1,6 +1,6 @@
-import { assertEquals } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell, { exec } from "../src/mod.ts";
+import unshell, { exec } from "../mod.ts";
 
 Deno.test(
   `given echo bin, if we call it twice, then there should be no overlap between command`,
@@ -13,8 +13,8 @@ Deno.test(
     const bar = await exec(echo("bar"));
 
     // Then
-    assertEquals(foo, "foo");
-    assertEquals(bar, "bar");
+    asserts.assertEquals(foo, "foo");
+    asserts.assertEquals(bar, "bar");
   },
 );
 
@@ -30,7 +30,7 @@ Deno.test(
     const foo = await exec(echoFoo);
 
     // Then
-    assertEquals(foo, "foo");
-    assertEquals(bar, "bar");
+    asserts.assertEquals(foo, "foo");
+    asserts.assertEquals(bar, "bar");
   },
 );

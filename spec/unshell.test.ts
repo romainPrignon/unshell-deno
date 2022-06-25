@@ -1,6 +1,6 @@
-import { assertEquals } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell, { exec, pipe } from "../src/mod.ts";
+import unshell, { exec, pipe } from "../mod.ts";
 
 Deno.test(`echo foo`, async () => {
   // Given
@@ -10,7 +10,7 @@ Deno.test(`echo foo`, async () => {
   const res = await exec(echo("foo"));
 
   // Then
-  assertEquals(res, "foo");
+  asserts.assertEquals(res, "foo");
 });
 
 Deno.test(`echo $(which deno)`, async () => {
@@ -21,7 +21,7 @@ Deno.test(`echo $(which deno)`, async () => {
   const res = await exec(echo(which("deno")));
 
   // Then
-  assertEquals(res, "/home/romainprignon/.deno/bin/deno");
+  asserts.assert(res.includes("/deno"));
 });
 
 Deno.test(`git remote show origin -n | head -2`, async () => {
@@ -32,11 +32,7 @@ Deno.test(`git remote show origin -n | head -2`, async () => {
   const res = await exec(pipe(git.remote.show("origin", "-n"), head("-2")));
 
   // Then
-  assertEquals(
-    res,
-    `* remote origin
-  Fetch URL: git@github.com:romainPrignon/unshell-deno`,
-  );
+  asserts.assert(res.includes("romainPrignon/unshell-deno"));
 });
 
 Deno.test(`git log | uniq -c | tail -1`, async () => {
@@ -52,7 +48,7 @@ Deno.test(`git log | uniq -c | tail -1`, async () => {
   const res = await exec(cmd);
 
   // Then
-  assertEquals(res, `1     initial commit`);
+  asserts.assertEquals(res, `1     initial commit`);
 });
 
 Deno.test(`pwd`, async () => {
@@ -64,7 +60,7 @@ Deno.test(`pwd`, async () => {
   const name = await exec(basename(cwd));
 
   // Then
-  assertEquals(name, "unshell-deno");
+  asserts.assertEquals(name, "unshell-deno");
 });
 
 Deno.test(`find . -type f -name makefile`, async () => {
@@ -75,7 +71,7 @@ Deno.test(`find . -type f -name makefile`, async () => {
   const res = await exec(find(".", "-type", "f", "-name", "LICENSE.md"));
 
   // Then
-  assertEquals(res, `./LICENSE.md`);
+  asserts.assertEquals(res, `./LICENSE.md`);
 });
 
 Deno.test(`wget -q -O /tmp/unshell/README.md https://raw.githubusercontent.com/romainPrignon/unshell/master/README.md`, async () => {
@@ -97,7 +93,7 @@ Deno.test(`wget -q -O /tmp/unshell/README.md https://raw.githubusercontent.com/r
   try {
     await exec(cat("/tmp/unshell"));
   } catch (err) {
-    assertEquals(err.message, `cat: /tmp/unshell: No such file or directory`);
+    asserts.assertEquals(err.message, `cat: /tmp/unshell: No such file or directory`);
   }
 });
 
@@ -109,7 +105,7 @@ Deno.test(`bash -c "echo hello"`, async () => {
   const res = await exec(bash("-c", "echo hello"));
 
   // Then
-  assertEquals(res, `hello`);
+  asserts.assertEquals(res, `hello`);
 });
 
 Deno.test(`sleep 1`, async () => {

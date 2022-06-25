@@ -1,4 +1,4 @@
-import { assertEquals, assertRejects } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
 import { resolve } from "../src/resolve.ts";
 
@@ -20,7 +20,7 @@ Deno.test(
     process.stdin?.close();
 
     // Then
-    assertEquals(res, "foo");
+    asserts.assertEquals(res, "foo");
   },
 );
 
@@ -39,6 +39,6 @@ Deno.test(
     process.stdin?.close();
 
     // Then
-    await assertRejects(() => resolve(process));
+    await asserts.assertRejects(() => resolve(process));
   },
 );

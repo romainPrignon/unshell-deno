@@ -1,5 +1,5 @@
 import type { Process } from "../type/index.d.ts";
-import { readLines } from "io";
+import { io } from "../deps.ts";
 
 export const resolveIter = async (process: Process) => {
   const { success } = await process.status();
@@ -15,6 +15,6 @@ export const resolveIter = async (process: Process) => {
     close() {
       process.stdout?.close();
     },
-    data: readLines(process.stdout!),
+    data: io.readLines(process.stdout!),
   };
 };

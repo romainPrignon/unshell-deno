@@ -1,6 +1,6 @@
-import { assertEquals, assertRejects } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell, { exec, pipe } from "../src/mod.ts";
+import unshell, { exec, pipe } from "../mod.ts";
 
 Deno.test(
   `given multiple binary, when we pipe them, then there should be no error`,
@@ -12,7 +12,7 @@ Deno.test(
     const res = await exec(pipe(echo("foo"), base64()));
 
     // Then
-    assertEquals(res, "Zm9vCg==");
+    asserts.assertEquals(res, "Zm9vCg==");
   },
 );
 
@@ -26,7 +26,7 @@ Deno.test(
     const res = await exec(pipe(echo("foo"), base64(), base64()));
 
     // Then
-    assertEquals(res, "Wm05dkNnPT0K");
+    asserts.assertEquals(res, "Wm05dkNnPT0K");
   },
 );
 
@@ -37,6 +37,6 @@ Deno.test(
     const { cat, base64 } = unshell();
 
     // Then
-    await assertRejects(() => exec(pipe(cat("/etc/shadow"), base64())));
+    await asserts.assertRejects(() => exec(pipe(cat("/etc/shadow"), base64())));
   },
 );

@@ -1,4 +1,4 @@
-import { assertEquals } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
 import { execIter } from "../src/execIter.ts";
 
@@ -18,7 +18,7 @@ Deno.test(
 
     // Then
     for await (const r of res) {
-      assertEquals(r, "foo");
+      asserts.assertEquals(r, "foo");
     }
     close();
 

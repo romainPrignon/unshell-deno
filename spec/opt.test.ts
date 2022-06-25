@@ -1,6 +1,6 @@
-import { assertExists } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell from "../src/mod.ts";
+import unshell from "../mod.ts";
 
 Deno.test(
   `given docker, when we call it with fn syntax and opt at every steps, then there should be no error`,
@@ -12,7 +12,7 @@ Deno.test(
     const res = docker({ debug: true }).ps({ a: true, n: 1 });
 
     // Then
-    assertExists(res);
+    asserts.assertExists(res);
   },
 );
 
@@ -26,7 +26,7 @@ Deno.test(
     const where_is_deno = echo(which("deno"));
 
     // Then
-    assertExists(where_is_deno);
+    asserts.assertExists(where_is_deno);
   },
 );
 
@@ -37,6 +37,6 @@ Deno.test(
     const { ls } = unshell();
 
     // Then
-    assertExists(ls(1));
+    asserts.assertExists(ls(1));
   },
 );

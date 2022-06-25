@@ -1,6 +1,6 @@
-import { assert, assertRejects } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell, { exec } from "../src/mod.ts";
+import unshell, { exec } from "../mod.ts";
 
 Deno.test(
   `given cat bin, when we cat protected file without sudo, then there should be an error`,
@@ -9,7 +9,7 @@ Deno.test(
     const { cat } = unshell();
 
     // Then
-    await assertRejects(() => exec(cat("/etc/shadow")));
+    await asserts.assertRejects(() => exec(cat("/etc/shadow")));
   },
 );
 
@@ -24,6 +24,6 @@ Deno.test(
     const res = await exec(sudo.cat("/etc/shadow"));
 
     // Then
-    assert(typeof res === "string");
+    asserts.assert(typeof res === "string");
   },
 );

@@ -1,9 +1,9 @@
 {
   "tasks": {
-    "install": "deno cache --no-check --reload src/mod.ts",
+    "install": "deno cache --no-check --reload deps.ts",
     "dev": "deno test --cached-only --allow-run --allow-env --allow-read --watch test/",
     "debug": "deno test --cached-only --allow-run --allow-env --allow-read --inspect-brk", // deno task debug [files]...
-    "check": "deno check src/mod.ts",
+    "check": "deno check mod.ts",
     "fmt": "deno fmt",
     "lint": "deno lint",
     "test": "deno test --no-check --cached-only --allow-run --allow-env --allow-read test/",

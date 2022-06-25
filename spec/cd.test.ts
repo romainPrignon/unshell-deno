@@ -1,6 +1,5 @@
-import { assert } from "testing/asserts.ts";
-import * as path from "path";
-import unshell, { exec } from "../src/mod.ts";
+import { asserts, path } from "../deps.ts";
+import unshell, { exec } from "../mod.ts";
 
 Deno.test(
   `calling cmd after changing dir with cd should work`,
@@ -18,6 +17,6 @@ Deno.test(
     cd(currentDir);
 
     // Then
-    assert(res.includes(currentFile));
+    asserts.assert(res.includes(currentFile));
   },
 );

@@ -1,4 +1,4 @@
-import { assertEquals } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
 import { pipe } from "../src/pipe.ts";
 
@@ -12,6 +12,6 @@ Deno.test(
 
     const res2 = pipe(f1, f2);
 
-    assertEquals(res2(), res1);
+    asserts.assertEquals(res2(), res1);
   },
 );

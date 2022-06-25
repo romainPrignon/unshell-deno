@@ -1,6 +1,6 @@
-import { assertExists } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell from "../src/mod.ts";
+import unshell from "../mod.ts";
 
 Deno.test(
   `given a binary with arg, when we call with dot syntax, then there should be no error`,
@@ -12,7 +12,7 @@ Deno.test(
     const res = git.remotes();
 
     // Then
-    assertExists(res);
+    asserts.assertExists(res);
   },
 );
 
@@ -26,6 +26,6 @@ Deno.test(
     const res = git().remotes();
 
     // Then
-    assertExists(res);
+    asserts.assertExists(res);
   },
 );

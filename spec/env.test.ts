@@ -1,6 +1,6 @@
-import { assertEquals } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell, { exec } from "../src/mod.ts";
+import unshell, { exec } from "../mod.ts";
 
 Deno.test(
   `should be able to print env var througth js`,
@@ -13,7 +13,7 @@ Deno.test(
     const res = await exec(echo(Deno.env.get("QUX")));
 
     // Then
-    assertEquals(res, "qux");
+    asserts.assertEquals(res, "qux");
   },
 );
 
@@ -28,6 +28,6 @@ Deno.test(
     const res = await exec(printenv("QUX"));
 
     // Then
-    assertEquals(res, "qux");
+    asserts.assertEquals(res, "qux");
   },
 );

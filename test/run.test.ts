@@ -1,4 +1,4 @@
-import { assert } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 import { run } from "../src/run.ts";
 
 Deno.test(
@@ -16,7 +16,7 @@ Deno.test(
     res.close();
 
     // Then
-    assert(res instanceof Deno.Process);
+    asserts.assert(res instanceof Deno.Process);
   },
 );
 
@@ -43,7 +43,7 @@ Deno.test(
     res.close();
 
     // Then
-    assert(res instanceof Deno.Process);
+    asserts.assert(res instanceof Deno.Process);
   },
 );
 
@@ -70,6 +70,6 @@ Deno.test(
     res.close();
 
     // Then
-    assert(res instanceof Deno.Process);
+    asserts.assert(res instanceof Deno.Process);
   },
 );

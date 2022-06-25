@@ -1,4 +1,4 @@
-import { assertEquals } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
 import { cd } from "../src/cd.ts";
 
@@ -12,6 +12,6 @@ Deno.test(
     cd(newPath);
 
     // Then
-    assertEquals(Deno.cwd(), newPath);
+    asserts.assertEquals(Deno.cwd(), newPath);
   },
 );

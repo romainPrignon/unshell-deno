@@ -1,5 +1,5 @@
 import type { Command } from "../type/index.d.ts";
-import { assert, assertExists } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
 import { handler } from "../src/handler.ts";
 
@@ -12,7 +12,7 @@ Deno.test(
 
     const echo = handler(cmd).get({}, name);
 
-    assertExists(echo.foo);
+    asserts.assertExists(echo.foo);
   },
 );
 
@@ -26,7 +26,7 @@ Deno.test(
 
     const echo = handler(cmd).get({}, name);
 
-    assertExists(echo(foo));
+    asserts.assertExists(echo(foo));
   },
 );
 
@@ -40,11 +40,11 @@ Deno.test(
 
     const echo = handler(cmd).get({}, name);
 
-    assertExists(echo(foo));
-    assertExists(echo(foo).foo);
-    assertExists(echo(foo).foo());
-    assertExists(echo(foo).foo().foo);
-    assertExists(echo(foo).foo().foo());
+    asserts.assertExists(echo(foo));
+    asserts.assertExists(echo(foo).foo);
+    asserts.assertExists(echo(foo).foo());
+    asserts.assertExists(echo(foo).foo().foo);
+    asserts.assertExists(echo(foo).foo().foo());
   },
 );
 
@@ -65,7 +65,7 @@ Deno.test(
     res.close();
 
     // Then
-    assert(res instanceof Deno.Process);
+    asserts.assert(res instanceof Deno.Process);
   },
 );
 
@@ -79,6 +79,6 @@ Deno.test(
     const cd = handler().get({}, name);
 
     // Then
-    assert(cd instanceof Function);
+    asserts.assert(cd instanceof Function);
   },
 );

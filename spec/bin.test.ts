@@ -1,6 +1,6 @@
-import { assertExists, assertThrows } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
-import unshell from "../src/mod.ts";
+import unshell from "../mod.ts";
 
 Deno.test(
   "given a binary in path, when we destructure that binary from unshell, then there should be no error",
@@ -9,7 +9,7 @@ Deno.test(
     const { echo } = unshell();
 
     // Then
-    assertExists(echo);
+    asserts.assertExists(echo);
   },
 );
 
@@ -20,7 +20,7 @@ Deno.test(
     const { docker_compose } = unshell();
 
     // Then
-    assertExists(docker_compose);
+    asserts.assertExists(docker_compose);
   },
 );
 
@@ -35,15 +35,15 @@ Deno.test(
     const docker_compose_res = docker_compose();
 
     // Then
-    assertExists(docker_res);
-    assertExists(docker_compose_res);
+    asserts.assertExists(docker_res);
+    asserts.assertExists(docker_compose_res);
   },
 );
 
 Deno.test(
   "given a binary not in path, when we destructure that binary from unshell, then there should be an error",
   () => {
-    assertThrows(() => {
+    asserts.assertThrows(() => {
       const { _notInPath } = unshell();
     });
   },
@@ -58,7 +58,7 @@ Deno.test(
     Deno.env.delete("PATH");
 
     // then
-    assertThrows(() => {
+    asserts.assertThrows(() => {
       // deno-lint-ignore no-unused-vars
       const { echo } = unshell();
     });

@@ -1,4 +1,4 @@
-import { assertEquals, assertThrows } from "testing/asserts.ts";
+import { asserts } from "../deps.ts";
 
 import { bin } from "../src/bin.ts";
 
@@ -13,7 +13,7 @@ Deno.test(
     const res = bin(cmd, name);
 
     // Then
-    assertEquals(res, cmd);
+    asserts.assertEquals(res, cmd);
   },
 );
 
@@ -28,7 +28,7 @@ Deno.test(
     const res = bin(cmd, name);
 
     // Then
-    assertEquals(res, ["foo", "bar-baz"]);
+    asserts.assertEquals(res, ["foo", "bar-baz"]);
   },
 );
 
@@ -40,7 +40,7 @@ Deno.test(
     const name = "foo";
 
     // Then
-    assertThrows(() => bin(cmd, name));
+    asserts.assertThrows(() => bin(cmd, name));
   },
 );
 
@@ -54,7 +54,7 @@ Deno.test(
     const name = "deno";
 
     // Then
-    assertThrows(() => bin(cmd, name));
+    asserts.assertThrows(() => bin(cmd, name));
 
     Deno.env.set("PATH", pathEnv);
   },
@@ -71,6 +71,6 @@ Deno.test(
     const res = bin(cmd, name);
 
     // Then
-    assertEquals(res, [name]);
+    asserts.assertEquals(res, [name]);
   },
 );
