@@ -1,7 +1,12 @@
-export const pipe = <Args extends Array<unknown>>(f1: (...args: Args) => unknown, ...fns: Array<() => unknown>) =>
-  (...args: Args) => {
-    return fns.reduce(
-      (res, fn) => `${res} | ${fn()}`,
-      f1.apply(null, args) || ``,
+export const pipe = (f1, ...fns) => {
+  return (): Promise<unknown> => { // todo unknow
+    const res = fns.reduce(
+      async (prev: unknown, fn) => {
+        return fn(await prev)
+      },
+      f1(),
     );
+
+    return res
   }
+}

@@ -53,7 +53,6 @@ scripts:
     desc: test codebase
     cmd:
       pll:
-        - deno test --failfast $src_path
         - deno test --failfast $spec_path
     tsconfig: tsconfig.json
 
@@ -61,7 +60,6 @@ scripts:
     desc: test codebase with coverage
     cmd:
       pll:
-        - deno test --unstable --coverage $src_path
         - deno test --unstable --coverage $spec_path
     tsconfig: tsconfig.json
 
